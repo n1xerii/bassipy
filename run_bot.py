@@ -1,5 +1,6 @@
+import os
 from bot_instance import bot
-from bot_token import my_token
+from bot_token import my_token, my_platform
 import main
 import data
 
@@ -44,6 +45,14 @@ async def ping(ctx):
         await ctx.send(f"An error occurred. Error: {e}")
         return
 
+def Main():
+    if (my_platform == "windows"):
+        data.ffmpeg = os.path.join(os.path.dirname(__file__), 'ffmpeg', 'ffmpeg.exe')
+    elif (my_platform == "linux"):
+        data.ffmpeg = 'ffmpeg'
 
-# RUN BOT
-bot.run(my_token)
+    # RUN BOT
+    bot.run(my_token)
+
+if __name__ == "__main__":
+    Main()

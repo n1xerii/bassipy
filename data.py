@@ -7,7 +7,7 @@ from discord.ext import commands
 from discord import FFmpegOpusAudio
 
 # FFMPEG
-ffmpeg = os.path.join(os.path.dirname(__file__), 'ffmpeg', 'ffmpeg.exe')
+ffmpeg = 'ffmpeg'
 
 # LOGGING
 logging.basicConfig(level=logging.ERROR, filename="bot_errors.log")    # Logging
