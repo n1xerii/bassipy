@@ -9,9 +9,8 @@ from bot_token import my_token
 import data
 from bot_instance import bot
 
-# BASIC BOOLEANS
-is_playing = False    # is_playing is used to check whether a track is currently being played
-is_searching = False  # isSeacrhing is used to check whether a search is already running
+is_playing = False
+is_searching = False
 
 # PLAY COMMAND
 # | Plays any audio from Youtube in a Discord Voice Channel
@@ -19,12 +18,11 @@ async def runplay(ctx, url: str):
     global is_playing
 
     try:
-        # If user is present in a voice channel, return/stop execution
+        # If user is not present in a voice channel, stop execution
         if not ctx.author.voice:
             await ctx.send("Join a voice channel first!")
             return
 
-        # Users voice channel
         vc_to_join = ctx.author.voice.channel
 
         # Connect to the voice channel
@@ -38,7 +36,7 @@ async def runplay(ctx, url: str):
             infoDict = ydl.extract_info(url, download=True)
             audioFile = ydl.prepare_filename(infoDict)
 
-        # Check whether file is found before playing, if not, return/stop execution
+        # Check whether file is found before playing, if not, stop exectuion
         if not os.path.isfile(audioFile):
             ctx.send(f"Audio file not found: {audioFile}")
             return
@@ -59,11 +57,9 @@ async def runplay(ctx, url: str):
         # Set is_playing to false to allow running play command again
         is_playing = False
 
-        # Disconnect from voice channel
         await data.vc_conn.disconnect()
         await ctx.send("Finished playing audio.")
 
-    # If any errors happen, send message to console and to the channel where user ran the command from
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         await ctx.send(f"An error occurred: {e}")
@@ -75,18 +71,17 @@ async def runplay(ctx, url: str):
 async def runskip(ctx):
     global is_playing
 
-    # If no audio is playing, there is nothing to skip
+    # Ensure that a song is playing
     if not is_playing:
         await ctx.send("No audio is currently playing!")
         return
 
-    # If audio is playing, skip the currently playing song by stopping the connection and disconnecting
+    # If audio is playing, skip the current song and disconnect
     if (data.vc_conn is not None):
         data.vc_conn.stop()
         await ctx.send("Song skipped!")
-        await data.vc_conn.disconnect()    # Disconnect from voice channel
+        await data.vc_conn.disconnect()
 
-    # Set is_playing to false
     is_playing = False
 
 
@@ -98,20 +93,19 @@ async def runsearch(ctx, *, arg):
     try:
         await ctx.send("Searching... Please wait...")
 
-        is_searching = True  # Searching to true
+        is_searching = True
         
         # Call "ytsearch5" from ytdlp and populate "videos" with the result
         with youtube_dl.YoutubeDL(data.ydl_options) as ydl:
             videos = ydl.extract_info(f"ytsearch5:{arg}", download=False)   # Returns a dictionary with results
             
-        # Ensure that "videos" is not None or empty
+        # Ensure that "videos" is valid
         if videos is None or "entries" not in videos:
             await ctx.send("No results found.")
             return
 
         videos = videos["entries"][:5]
 
-        # Discord view
         view = discord.ui.View()
 
         # Loop through results in "videos"
@@ -121,8 +115,8 @@ async def runsearch(ctx, *, arg):
 
             # Construction of buttons
             button = discord.ui.Button(
-                label=f"{index + 1}.{vidTitle[:40]}",   # Button text
-                style=discord.ButtonStyle.primary   # Button style
+                label=f"{index + 1}.{vidTitle[:40]}",
+                style=discord.ButtonStyle.primary
             )
 
             # Callback after button is clicked
@@ -130,7 +124,7 @@ async def runsearch(ctx, *, arg):
                 global is_searching
                 
                 await ctx.send(f"**SELECTED VIDEO**: {url}")
-                await runplay(ctx, url)    # Call "play" command to play the selected result/video
+                await runplay(ctx, url)    # Call "play" command to play the selected video
                 is_searching = False
 
             button.callback = callback
