@@ -3,7 +3,7 @@ import main
 import data
 import bot_data
 
-@bot_data.bot.command()
+@data.bot.command()
 async def play(ctx, url: str):
     try:
         if main.is_playing:
@@ -14,7 +14,7 @@ async def play(ctx, url: str):
         await ctx.send(f"An error occurred. Error: {e}")
         return
 
-@bot_data.bot.command()
+@data.bot.command()
 async def skip(ctx):
     try:
         if not main.is_playing:
@@ -25,7 +25,7 @@ async def skip(ctx):
         await ctx.send(f"An error occurred. Error: {e}")
         return
 
-@bot_data.bot.command()
+@data.bot.command()
 async def search(ctx, *, arg):
     try:
         if main.is_playing or main.is_searching:
@@ -36,7 +36,7 @@ async def search(ctx, *, arg):
         await ctx.send(f"An error occurred. Error: {e}")
         return
 
-@bot_data.bot.command()
+@data.bot.command()
 async def ping(ctx):
     try:
         await ctx.send(f'Pong! Latency is {round(data.bot.latency * 1000)}ms')
@@ -51,7 +51,7 @@ def Main():
         data.ffmpeg = 'ffmpeg'
 
     # RUN BOT
-    bot_data.bot.run(bot_data.my_token)
+    data.bot.run(bot_data.my_token)
 
 if __name__ == "__main__":
     Main()
