@@ -45,9 +45,9 @@ async def ping(ctx):
         return
 
 def Main():
-    if (bot_data.my_platform == "windows"):
+    if (bot_data.my_platform.lower() == "windows"):
         data.ffmpeg = os.path.join(os.path.dirname(__file__), 'ffmpeg', 'ffmpeg.exe')
-    elif (bot_data.my_platform == "linux"):
+    elif (bot_data.my_platform.lower() == "linux"):
         data.ffmpeg = 'ffmpeg'
 
     # RUN BOT
