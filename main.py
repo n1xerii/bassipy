@@ -5,9 +5,8 @@ import logging
 import yt_dlp as youtube_dl
 from discord.ext import commands
 from discord import FFmpegOpusAudio
-from bot_token import my_token
+
 import data
-from bot_instance import bot
 
 is_playing = False
 is_searching = False
