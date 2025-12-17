@@ -1,5 +1,3 @@
-import os
-import asyncio
 import discord
 import yt_dlp as youtube_dl
 from discord import FFmpegOpusAudio
