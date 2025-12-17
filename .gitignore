@@ -3,8 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-bot_token.py
+
+# ADDED
+bot_data.py
 downloads
+bot_errors.log
+.idea
+
 
 # User-specific files
 *.rsuser
@@ -399,6 +404,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-# ADDED
-.idea
