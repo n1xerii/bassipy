@@ -27,16 +27,16 @@ The bot does not yet feature a queue and only plays one song at a time.
  `pip install -r requirements.txt`
 
 ### Setting up bot_data.py
-1. Add a new python file named "bot_data.py" into the root folder of the repository
-2. Open "bot_data.py" and add these two lines: `my_token = ""` and `my_platform = ""`
-3. Input your Discord bot token `my_token = "yourtokenhere"`
+1. Add a new python file "bot_data.py" into the folder
+2. Open "bot_data.py" and add two lines: `my_token = ""` and `my_platform = ""`
+3. Input your Discord bot token `my_token = "yourtokenhere"` (DISCLAIMER: NEVER SHARE YOUR BOT TOKEN!)
 4. Input your platform, in this case its Windows `my_platform = "Windows"`
 5. Save the file and you bot_data.py is ready!
 
 ### Running the bot
-1. Open a terminal or a CMD prompt.
+1. Open Powershell or CMD.
 2. Navigate to the location of your repository `cd path/to/cloned/repo`
-3. Run `python run_bot.py` in your terminal or CMD and the bot should start!
+3. Run `python run_bot.py` in your terminal and the bot should start!
 
 ---
  
