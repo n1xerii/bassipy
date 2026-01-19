@@ -35,7 +35,7 @@ async def runplay(ctx, url: str):
             infoDict = ydl.extract_info(url, download=True)
             audioFile = ydl.prepare_filename(infoDict)
 
-        # Check whether file is found before playing, if not, stop exectuion
+        # Check whether file is found before playing, if not, stop execution
         if not os.path.isfile(audioFile):
             ctx.send(f"Audio file not found: {audioFile}")
             return
@@ -71,9 +71,12 @@ async def runskip(ctx):
     global is_playing
 
     # Ensure that a song is playing
-    if not is_playing:
-        await ctx.send("No audio is currently playing!")
-        return
+    #if not is_playing:
+    #    await ctx.send("No audio is currently playing!")
+    #    return
+    #if is_searching:
+    #    await ctx.send("Wait for search to end.")
+    #    return
 
     # If audio is playing, skip the current song and disconnect
     if (data.vc_conn is not None):

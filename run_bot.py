@@ -7,6 +7,10 @@ import bot_data
 async def play(ctx, url: str):
     try:
         if main.is_playing:
+            await ctx.send("Wait for current song to end.")
+            return
+        if main.is_searching:
+            await ctx.send("Cant play while searching.")
             return
             
         await main.runplay(ctx, url)
@@ -18,7 +22,11 @@ async def play(ctx, url: str):
 async def skip(ctx):
     try:
         if not main.is_playing:
+            await ctx.send("No song is playing.")
             return
+        #if main.is_searching:
+        #    return
+
 
         await main.runskip(ctx)
     except Exception as e:
@@ -28,7 +36,11 @@ async def skip(ctx):
 @data.bot.command()
 async def search(ctx, *, arg):
     try:
-        if main.is_playing or main.is_searching:
+        if main.is_playing:
+            await ctx.send("Cant search while playing.")
+            return
+        if main.is_searching:
+            await ctx.send("Already searching.")
             return
         
         await main.runsearch(ctx, arg=arg)
