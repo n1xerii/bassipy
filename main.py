@@ -70,14 +70,6 @@ async def runplay(ctx, url: str):
 async def runskip(ctx):
     global is_playing
 
-    # Ensure that a song is playing
-    #if not is_playing:
-    #    await ctx.send("No audio is currently playing!")
-    #    return
-    #if is_searching:
-    #    await ctx.send("Wait for search to end.")
-    #    return
-
     # If audio is playing, skip the current song and disconnect
     if (data.vc_conn is not None):
         data.vc_conn.stop()
