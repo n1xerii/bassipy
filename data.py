@@ -12,8 +12,10 @@ vc_conn = None
 
 # YOUTUBE DOWNLOAD OPTIONS
 ydl_options = {
-    'format': 'bestaudio/best',
-    'quiet': True,
+    "format": "bestaudio/best",
+    "noplaylist": True,
+    "quiet": True,
+    "extract_flat": False,
     'outtmpl': 'downloads/%(id)s.%(ext)s',
 }
 

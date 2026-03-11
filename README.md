@@ -33,6 +33,9 @@ The bot does not yet feature a queue and only plays one song at a time.
 4. Input your platform, in this case its Windows `my_platform = "Windows"`
 5. Save the file and you bot_data.py is ready!
 
+### Install deno
+1. npm install deno
+
 ### Running the bot
 1. Open Powershell or CMD.
 2. Navigate to the location of your repository `cd path/to/cloned/repo`
