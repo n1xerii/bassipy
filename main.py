@@ -1,9 +1,7 @@
 import os
 import asyncio
 import discord
-import logging
 import yt_dlp
-from discord.ext import commands
 from discord import FFmpegOpusAudio
 
 import data
@@ -11,42 +9,47 @@ import data
 is_playing = False
 is_searching = False
 
+song = None
 songs = []
 
-async def get_song_data(urlToUse):
-    # Prepare file
+def get_song_data(urlToUse):
     try:
+        # Prepare file
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
             info = ydl.extract_info(urlToUse, download=True)
             #audioFile = ydl.prepare_filename(info)
 
             ydl.sanitize_info(info)
-            audioFile = ydl.download(urlToUse)
+
+            audioFile = ydl.prepare_filename(info)
+            # errorCode = ydl.download(urlToUse)
 
             return audioFile
     except Exception as e:
-        logging.error(f"An error occurred: {e}")
-        #await ctx.send(f"An error occurred: {e}")
-        return
+        #logging.error(f"An error occurred: {e}")
+        print(f"An error occurred: {e}")
+        return None
 
 async def disconnect_from_voice(ctx):
     global is_playing
 
-    if (data.vc_conn is not None):
-        await data.vc_conn.disconnect()
+    if data.vc_conn is None:
+        return
+
+    await data.vc_conn.disconnect()
 
 # PLAY COMMAND
 # | Plays a link from Youtube in a Discord voice channel
 async def runplay(ctx, url: str):
     global is_playing
+    global song
 
     # If user is not in a voice channel, prompt to join one
     if not ctx.author.voice:
         await ctx.send("Join a voice channel first!")
         return
 
-    song = await get_song_data(url)
-
+    song = get_song_data(url)
     #songs.append(song)
 
     try:
@@ -55,12 +58,12 @@ async def runplay(ctx, url: str):
         # Connect to the voice channel
         data.vc_conn = await vc_to_join.connect()
 
-        # Set is_playing to true to prevent running the play command again during playback / deprecated comment
-        is_playing = True
+        # Making sure file exists before playing
+        if not os.path.isfile(song):
+            await ctx.send(f"Audio file not found: {song}")
+            return
 
-        #if not os.path.isfile(song):
-        #    await ctx.send(f"Audio file not found: {song}")
-        #   return
+        #is_playing = True
 
         audio_source = FFmpegOpusAudio(song, executable=data.ffmpeg)
         data.vc_conn.play(audio_source)
@@ -69,10 +72,6 @@ async def runplay(ctx, url: str):
             await asyncio.sleep(1)
 
         #for songToPlay in songs:
-            # Making sure file exists before playing
-            #if not os.path.isfile(songToPlay):
-            #    ctx.send(f"Audio file not found: {songToPlay}")
-            #    return
 
             # Prepare audio source
             #audio_source = FFmpegOpusAudio(songToPlay, executable=data.ffmpeg)
@@ -92,32 +91,31 @@ async def runplay(ctx, url: str):
         # Set is_playing to false to allow running play command again / deprecated comment
         #is_playing = False
 
-        #await data.vc_conn.disconnect()
         await disconnect_from_voice(ctx)
         await ctx.send("Finished playing audio.")
     except Exception as e:
-        logging.error(f"An error occurred: {e}")
-        await ctx.send(f"An error occurred: {e}")
+        #logging.error(f"An error occurred: {e}")
+        print(f"An error occurred: {e}")
         return
 
 
 # SKIP COMMAND
-# | Skips the currently playing video/song if one is playing
+# | Skips the currently playing song
 async def runskip(ctx):
     global is_playing
 
     # If audio is playing, skip the current song and disconnect
-    if (data.vc_conn is not None):
+    if data.vc_conn is not None:
         data.vc_conn.stop()
         await ctx.send("Song skipped!")
         await disconnect_from_voice(ctx)
-        return
 
-    is_playing = False
+        is_playing = False
+        return
 
 
 # SEARCH COMMAND
-# | Searches 5 top results for "arg" from Youtube and provides 5 buttons to select any of them to play
+# | Searches 5 top results for "arg" from Youtube and lets user choose which one to play
 async def runsearch(ctx, *, arg):
     global is_searching
     
