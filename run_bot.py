@@ -6,12 +6,13 @@ import bot_data
 @data.bot.command()
 async def play(ctx, url: str):
     try:
-        if main.is_playing:
-            await ctx.send("Wait for current song to end.")
-            return
-        if main.is_searching:
-            await ctx.send("Cant play while searching.")
-            return
+
+        #if main.is_playing:
+        #    await ctx.send("Wait for current song to end.")
+        #    return
+        #if main.is_searching:
+        #    await ctx.send("Cant play while searching.")
+        #    return
             
         await main.runplay(ctx, url)
     except Exception as e:

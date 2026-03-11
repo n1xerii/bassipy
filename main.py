@@ -11,49 +11,66 @@ import data
 is_playing = False
 is_searching = False
 
+songs = []
+
+async def get_song_data(urlToUse):
+    # Prepare file
+    with youtube_dl.YoutubeDL(data.ydl_options) as ydl:
+        infoDict = ydl.extract_info(urlToUse, download=True)
+        audioFile = ydl.prepare_filename(infoDict)
+
+        return audioFile
+
 # PLAY COMMAND
 # | Plays any audio from Youtube in a Discord Voice Channel
 async def runplay(ctx, url: str):
     global is_playing
 
-    try:
-        # If user is not present in a voice channel, stop execution
-        if not ctx.author.voice:
-            await ctx.send("Join a voice channel first!")
-            return
+    # If user is not present in a voice channel, stop execution
+    if not ctx.author.voice:
+        await ctx.send("Join a voice channel first!")
+        return
 
+    song = await get_song_data(url)
+
+    songs.append(song)
+
+    try:
         vc_to_join = ctx.author.voice.channel
 
         # Connect to the voice channel
         data.vc_conn = await vc_to_join.connect()
 
-        # Set is_playing to true to prevent running the play command again during playback
+        # Set is_playing to true to prevent running the play command again during playback / deprecated comment
         is_playing = True
 
         # Prepare file
-        with youtube_dl.YoutubeDL(data.ydl_options) as ydl:
-            infoDict = ydl.extract_info(url, download=True)
-            audioFile = ydl.prepare_filename(infoDict)
+        #with youtube_dl.YoutubeDL(data.ydl_options) as ydl:
+        #    infoDict = ydl.extract_info(url, download=True)
+        #    audioFile = ydl.prepare_filename(infoDict)
 
-        # Check whether file is found before playing, if not, stop execution
-        if not os.path.isfile(audioFile):
-            ctx.send(f"Audio file not found: {audioFile}")
-            return
+        for songToPlay in songs:
+            # Making sure file exists before playing
+            if not os.path.isfile(song):
+                ctx.send(f"Audio file not found: {song}")
+                return
 
-        # Prepare audio source
-        audio_source = FFmpegOpusAudio(audioFile, executable=data.ffmpeg)
+            # Prepare audio source
+            audio_source = FFmpegOpusAudio(songToPlay, executable=data.ffmpeg)
 
-        # Play audio source in voice channel
-        data.vc_conn.play(audio_source)
+            # Play audio source in voice channel
+            data.vc_conn.play(audio_source)
 
-        # Keep playing the song until it ends
-        while data.vc_conn.is_playing():
-            await asyncio.sleep(1)
+            # Keep playing the song until it ends
+            while data.vc_conn.is_playing():
+                await asyncio.sleep(1)
 
-        # Delete audio file
-        os.remove(audioFile)
+            # Delete audio file
+            #os.remove(songToPlay)
 
-        # Set is_playing to false to allow running play command again
+        songs.clear()
+
+        # Set is_playing to false to allow running play command again / deprecated comment
         is_playing = False
 
         await data.vc_conn.disconnect()
