@@ -10,6 +10,7 @@ is_playing = False
 is_searching = False
 
 song = None
+currentSong = None
 songs = []
 
 def get_song_data(urlToUse):
@@ -43,24 +44,33 @@ async def disconnect_from_voice(ctx):
 async def runplay(ctx, url: str):
     global is_playing
     global song
+    global currentSong
 
     # If user is not in a voice channel, prompt to join one
     if not ctx.author.voice:
         await ctx.send("Join a voice channel first!")
         return
 
+    if is_playing:
+        songs.append(song)
+        print("Song added to queue list.")
+        return
+
     song = get_song_data(url)
-    #songs.append(song)
 
     try:
+        is_playing = True
+
         vc_to_join = ctx.author.voice.channel
 
         # Connect to the voice channel
         data.vc_conn = await vc_to_join.connect()
 
+        currentSong = song
+
         # Making sure file exists before playing
-        if not os.path.isfile(song):
-            await ctx.send(f"Audio file not found: {song}")
+        if not os.path.isfile(currentSong):
+            await ctx.send(f"Audio file not found: {currentSong}")
             return
 
         #is_playing = True
@@ -71,27 +81,8 @@ async def runplay(ctx, url: str):
         while data.vc_conn.is_playing():
             await asyncio.sleep(1)
 
-        #for songToPlay in songs:
-
-            # Prepare audio source
-            #audio_source = FFmpegOpusAudio(songToPlay, executable=data.ffmpeg)
-
-            # Play audio source in voice channel
-            #data.vc_conn.play(audio_source)
-
-            # Keep playing the song until it ends
-            #while data.vc_conn.is_playing():
-            #    await asyncio.sleep(1)
-
-            # Delete audio file
-            #os.remove(songToPlay)
-
-        #songs.clear()
-
-        # Set is_playing to false to allow running play command again / deprecated comment
-        #is_playing = False
-
         await disconnect_from_voice(ctx)
+        is_playing = False
         await ctx.send("Finished playing audio.")
     except Exception as e:
         #logging.error(f"An error occurred: {e}")
