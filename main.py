@@ -63,8 +63,17 @@ async def runplay(ctx):
             data.vc_conn = await vc_to_join.connect()
 
         if len(songs) > 0:
-            currentSong = songs[indexCount]
-            indexCount = indexCount + 1
+            try:
+                currentSong = songs[indexCount]
+                indexCount = indexCount + 1
+            except IndexError as i_e:
+                songs.clear()
+                currentSong = None
+                indexCount = 0
+                print("--- Clearing songs and resetting index counter.")
+
+            if indexCount > len(songs):
+                return
         else:
             songs.clear()
             return
@@ -84,7 +93,6 @@ async def runplay(ctx):
 
         await ctx.send("Finished playing song.")
         await asyncio.sleep(1)
-        await ctx.send("Playing next song in queue.")
         await runplay(ctx)
     except Exception as e:
         print(f"--- An error occurred: {e}")
@@ -96,7 +104,7 @@ async def runplay(ctx):
 async def runskip(ctx):
     global is_playing
 
-    # Skip the current song and disconnect
+    """ Disabled for later rework
     if data.vc_conn is not None:
         data.vc_conn.stop()
         await ctx.send("Song skipped!")
@@ -104,10 +112,12 @@ async def runskip(ctx):
 
         is_playing = False
         return
+    """
 
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
+""" Disabled for clarity
 async def runsearch(ctx, *, arg):
     global is_searching
     
@@ -145,7 +155,7 @@ async def runsearch(ctx, *, arg):
                 global is_searching
                 
                 await ctx.send(f"**SELECTED VIDEO**: {url}")
-                await runplay(ctx, url)    # Call "play" command to play the selected video
+                #await runplay(ctx, url)    # Call "play" command to play the selected video / Temporarily disabled
                 is_searching = False
 
             button.callback = callback
@@ -158,3 +168,4 @@ async def runsearch(ctx, *, arg):
     except Exception as e:
         await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
+"""

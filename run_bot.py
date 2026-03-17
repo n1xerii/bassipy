@@ -8,8 +8,12 @@ import bot_data
 async def play(ctx, url: str):
 
     main.song = main.get_song(url, ctx)
-
     main.songs.append(main.song)
+
+    if len(main.songs) == 1:
+        await ctx.send("Playing started!")
+    else:
+        await ctx.send("Song added to queue!")
 
     if data.vc_conn is None:
         await main.runplay(ctx)
@@ -33,8 +37,7 @@ async def skip(ctx):
             await ctx.send("Wait for search to end.")
             return
 
-        ### Temporarily disabled for clarity
-        #await main.runskip(ctx)
+        await main.runskip(ctx)
 
 """
 ### Temporarily disabled for clarity
