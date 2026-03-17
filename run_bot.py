@@ -1,53 +1,60 @@
 import os
+
 import main
 import data
 import bot_data
 
 @data.bot.command()
 async def play(ctx, url: str):
-    #if main.is_playing:
-    #    await ctx.send("Wait for current song to end.")
-    #    return
-    #if main.is_searching:
-    #    await ctx.send("Cant play while searching.")
-    #    return
 
-    await main.runplay(ctx, url)
+    main.song = main.get_song(url, ctx)
+
+    main.songs.append(main.song)
+
+    if data.vc_conn is None:
+        await main.runplay(ctx)
+
+    if data.vc_conn is not None and data.vc_conn.is_connected():
+        if data.vc_conn.is_playing():
+            return
+        else:
+            await main.runplay(ctx)
+    else:
+        await main.runplay(ctx)
 
 @data.bot.command()
 async def skip(ctx):
+
+        if data.vc_conn is None:
+            await ctx.send("Join a voice channel first!")
+            return
+
         if main.is_searching:
+            await ctx.send("Wait for search to end.")
             return
 
-        if not main.is_playing:
-            await ctx.send("No song to skip.")
-            return
+        ### Temporarily disabled for clarity
+        #await main.runskip(ctx)
 
-        await main.runskip(ctx)
-
+"""
+### Temporarily disabled for clarity
 @data.bot.command()
 async def search(ctx, *, arg):
-    try:
-        if main.is_playing:
-            await ctx.send("Cant search while playing.")
-            return
-        if main.is_searching:
-            await ctx.send("Already searching.")
-            return
-
-        # Temporarily disabled for clarity
-        #await main.runsearch(ctx, arg=arg)
-    except Exception as e:
-        await ctx.send(f"An error occurred. Error: {e}")
+    
+    if main.is_searching:
+        await ctx.send("Already searching.")
         return
+
+    await main.runsearch(ctx, arg=arg)
+"""
 
 @data.bot.command()
 async def ping(ctx):
     try:
         await ctx.send(f'Pong! Latency is {round(data.bot.latency * 1000)}ms')
     except Exception as e:
-        await ctx.send("An error occurred.")
-        print(f"An error occurred. Error: {e}")
+        await ctx.send("Unknown error occurred.")
+        print(f"--- An error occurred. Error: {e}")
         return
 
 def Main():

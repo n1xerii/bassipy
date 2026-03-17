@@ -15,7 +15,7 @@ songs = []
 
 indexCount = 0
 
-def get_song_data(urlToUse, ctx):
+def get_song(urlToUse, ctx):
     try:
         # Prepare file
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
@@ -31,7 +31,7 @@ def get_song_data(urlToUse, ctx):
     except Exception as e:
         #logging.error(f"An error occurred: {e}")
         ctx.send("Song added to queue!")
-        print(f"An error occurred: {e}")
+        print(f"--- An error occurred: {e}")
         return None
 
 async def disconnect_from_voice(ctx):
@@ -44,60 +44,36 @@ async def disconnect_from_voice(ctx):
 
 # PLAY COMMAND
 # | Plays a link from YouTube in a Discord voice channel
-async def runplay(ctx, url: str):
+async def runplay(ctx):
     global is_playing
-    global song
     global currentSong
     global indexCount
 
-    otherSong = None
-
     # If user is not in a voice channel, prompt to join one
     if not ctx.author.voice:
+        songs.clear()
         await ctx.send("Join a voice channel first!")
         return
 
-    """
-    if data.vc_conn is not None and data.vc_conn.is_playing():
-        otherSong = get_song_data(url, ctx)
-        songs.append(otherSong)
-        print("Song added to queue list.")
-    """
-
-    song = get_song_data(url, ctx)
-
     try:
-        is_playing = True
-
         vc_to_join = ctx.author.voice.channel
 
         # Connect to the voice channel
         if data.vc_conn is None:
             data.vc_conn = await vc_to_join.connect()
 
-        if not data.vc_conn.is_connected():
-            data.vc_conn = await vc_to_join.connect()
-
-        if data.vc_conn.is_playing():
-            otherSong = song
-            songs.append(otherSong)
-
         if len(songs) > 0:
             currentSong = songs[indexCount]
             indexCount = indexCount + 1
         else:
-            currentSong = song
+            songs.clear()
+            return
 
         # Making sure file exists before playing
         if not os.path.isfile(currentSong):
             await ctx.send(f"Audio file not found: {currentSong}")
             is_playing = False
             return
-
-        if data.vc_conn.is_playing():
-            while data.vc_conn.is_playing():
-                is_playing = True
-                await asyncio.sleep(1)
 
         audio_source = FFmpegOpusAudio(currentSong, executable=data.ffmpeg)
         data.vc_conn.play(audio_source)
@@ -106,13 +82,12 @@ async def runplay(ctx, url: str):
             is_playing = True
             await asyncio.sleep(1)
 
-        #songs.clear()
-        #await disconnect_from_voice(ctx)
-        #is_playing = False
-        #await ctx.send("Finished playing audio.")
+        await ctx.send("Finished playing song.")
+        await asyncio.sleep(1)
+        await ctx.send("Playing next song in queue.")
+        await runplay(ctx)
     except Exception as e:
-        #logging.error(f"An error occurred: {e}")
-        print(f"An error occurred: {e}")
+        print(f"--- An error occurred: {e}")
         return
 
 
@@ -121,7 +96,7 @@ async def runplay(ctx, url: str):
 async def runskip(ctx):
     global is_playing
 
-    # If audio is playing, skip the current song and disconnect
+    # Skip the current song and disconnect
     if data.vc_conn is not None:
         data.vc_conn.stop()
         await ctx.send("Song skipped!")
@@ -181,5 +156,5 @@ async def runsearch(ctx, *, arg):
         await ctx.send("**SELECT VIDEO**", view=view)
         is_searching = False
     except Exception as e:
-        await ctx.send(f"An error occurred while searching. Error: {e}")
+        await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
