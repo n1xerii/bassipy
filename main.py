@@ -6,7 +6,7 @@ from discord import FFmpegOpusAudio
 
 import data
 
-is_playing = False
+#is_playing = False
 is_searching = False
 
 song = None
@@ -35,8 +35,6 @@ def get_song(urlToUse, ctx):
         return None
 
 async def disconnect_from_voice(ctx):
-    global is_playing
-
     if data.vc_conn is None:
         return
 
@@ -45,7 +43,6 @@ async def disconnect_from_voice(ctx):
 # PLAY COMMAND
 # | Plays a link from YouTube in a Discord voice channel
 async def runplay(ctx):
-    global is_playing
     global currentSong
     global indexCount
 
@@ -75,7 +72,6 @@ async def runplay(ctx):
 
         # Making sure file exists before playing
         if not os.path.isfile(currentSong):
-            is_playing = False
             print(f"Audio file not found: {currentSong}")
             ctx.send("Error with audio file!")
             return
@@ -84,7 +80,6 @@ async def runplay(ctx):
         data.vc_conn.play(audio_source)
 
         while data.vc_conn.is_playing():
-            is_playing = True
             await asyncio.sleep(1)
 
         await ctx.send("Finished playing song.")
@@ -98,14 +93,12 @@ async def runplay(ctx):
 # SKIP COMMAND
 # | Skips the currently playing song
 async def runskip(ctx):
-
     """ Disabled for later rework
     if data.vc_conn is not None:
         data.vc_conn.stop()
         await ctx.send("Song skipped!")
         await disconnect_from_voice(ctx)
 
-        is_playing = False
         return
     """
 
