@@ -63,25 +63,21 @@ async def runplay(ctx):
             data.vc_conn = await vc_to_join.connect()
 
         if len(songs) > 0:
-            try:
-                currentSong = songs[indexCount]
-                indexCount = indexCount + 1
-            except IndexError as i_e:
+            if indexCount >= len(songs):
                 songs.clear()
                 currentSong = None
                 indexCount = 0
                 print("--- Clearing songs and resetting index counter.")
-
-            if indexCount > len(songs):
                 return
-        else:
-            songs.clear()
-            return
+
+            currentSong = songs[indexCount]
+            indexCount += 1
 
         # Making sure file exists before playing
         if not os.path.isfile(currentSong):
-            await ctx.send(f"Audio file not found: {currentSong}")
             is_playing = False
+            print(f"Audio file not found: {currentSong}")
+            ctx.send("Error with audio file!")
             return
 
         audio_source = FFmpegOpusAudio(currentSong, executable=data.ffmpeg)
@@ -95,14 +91,13 @@ async def runplay(ctx):
         await asyncio.sleep(1)
         await runplay(ctx)
     except Exception as e:
-        print(f"--- An error occurred: {e}")
+        print(f"--- An error occurred in main.runplay: {e}")
         return
 
 
 # SKIP COMMAND
 # | Skips the currently playing song
 async def runskip(ctx):
-    global is_playing
 
     """ Disabled for later rework
     if data.vc_conn is not None:
