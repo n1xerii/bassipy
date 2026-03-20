@@ -20,16 +20,14 @@ def get_song(urlToUse, ctx):
         # Prepare file
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
             info = ydl.extract_info(urlToUse, download=True)
-            #audioFile = ydl.prepare_filename(info)
 
             ydl.sanitize_info(info)
 
             audioFile = ydl.prepare_filename(info)
-            # errorCode = ydl.download(urlToUse)
 
             return audioFile
     except Exception as e:
-        #logging.error(f"An error occurred: {e}")
+        data.logging.error(f"An error occurred in get_song: {e}")
         ctx.send("Song added to queue!")
         print(f"--- An error occurred: {e}")
         return None
@@ -86,7 +84,8 @@ async def runplay(ctx):
         await asyncio.sleep(1)
         await runplay(ctx)
     except Exception as e:
-        print(f"--- An error occurred in main.runplay: {e}")
+        data.logging.error(f"An error occurred in runplay: {e}")
+        print(f"--- An error occurred in runplay: {e}")
         return
 
 
@@ -101,7 +100,6 @@ async def runskip(ctx):
 
         return
     """
-
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
@@ -154,6 +152,7 @@ async def runsearch(ctx, *, arg):
         await ctx.send("**SELECT VIDEO**", view=view)
         is_searching = False
     except Exception as e:
+        data.logging.error(f"An error occurred in runsearch: {e}")
         await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
 """
