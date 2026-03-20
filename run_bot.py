@@ -65,9 +65,16 @@ def Main():
         data.ffmpeg = os.path.join(os.path.dirname(__file__), 'ffmpeg', 'ffmpeg.exe')
     elif bot_data.my_platform.lower() == "linux":
         data.ffmpeg = 'ffmpeg'
+    else:
+        print("--- No platform provided.")
+        return
 
     # RUN BOT
-    data.bot.run(bot_data.my_token)
+    if bot_data.my_token is None or bot_data.my_token == "":
+        print("--- No token provided.")
+        return
+    else:
+        data.bot.run(bot_data.my_token)
 
 if __name__ == "__main__":
     Main()
