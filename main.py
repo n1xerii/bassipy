@@ -27,7 +27,6 @@ def get_song(urlToUse, ctx):
 
             return audioFile
     except Exception as e:
-        data.logging.error(f"An error occurred in get_song: {e}")
         ctx.send("Song added to queue!")
         print(f"--- An error occurred: {e}")
         return None
@@ -78,10 +77,8 @@ async def runplay(ctx):
         await asyncio.sleep(1)
         await runplay(ctx)
     except Exception as e:
-        data.logging.error(f"An error occurred in runplay: {e}")
         print(f"--- An error occurred in runplay: {e}")
         return
-
 
 # SKIP COMMAND
 # | Skips the currently playing song
@@ -146,7 +143,6 @@ async def runsearch(ctx, *, arg):
         await ctx.send("**SELECT VIDEO**", view=view)
         is_searching = False
     except Exception as e:
-        data.logging.error(f"An error occurred in runsearch: {e}")
         await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
 """
