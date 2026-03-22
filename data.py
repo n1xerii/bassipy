@@ -28,4 +28,4 @@ ydl_options = {
 }
 
 # LOGGING
-logging.basicConfig(level=logging.ERROR, filename="errors.log")
+logging.basicConfig(filename="bot.log")
