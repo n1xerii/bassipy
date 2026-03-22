@@ -65,7 +65,7 @@ async def runplay(ctx):
         # Making sure file exists before playing
         if not os.path.isfile(currentSong):
             print(f"Audio file not found: {currentSong}")
-            ctx.send("Error with audio file!")
+            await ctx.send("Error with audio file!")
             return
 
         audio_source = FFmpegOpusAudio(currentSong, executable=data.ffmpeg)
