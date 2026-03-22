@@ -81,17 +81,25 @@ async def runplay(ctx):
         print(f"--- An error occurred in runplay: {e}")
         return
 
+
 # SKIP COMMAND
 # | Skips the currently playing song
 async def runskip(ctx):
-    """ Disabled for later rework
-    if data.vc_conn is not None:
-        data.vc_conn.stop()
-        await ctx.send("Song skipped!")
-        await disconnect_from_voice(ctx)
+    global current_song
+    global index_count
 
+    if not data.vc_conn.is_connected():
+        await ctx.send("Not connected to voice channel.")
         return
-    """
+
+    if data.vc_conn.is_playing():
+        data.vc_conn.stop()
+        index_count = index_count + 1
+
+        await ctx.send("Song skipped!")
+        await runplay(ctx)
+        return
+
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play

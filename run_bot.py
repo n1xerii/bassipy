@@ -35,9 +35,13 @@ async def play(ctx, url: str):
 @data.bot.command()
 async def skip(ctx):
 
-        #if data.vc_conn is None:
-        #    await ctx.send("Join a voice channel first!")
-        #    return
+        if data.vc_conn is None:
+            await ctx.send("No voice connection.")
+            return
+
+        if not ctx.author.voice.channel:
+            await ctx.send("Join a voice channel first!")
+            return
 
         if main.is_searching:
             await ctx.send("Wait for search to end.")
