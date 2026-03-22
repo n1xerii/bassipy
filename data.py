@@ -25,7 +25,6 @@ ydl_options = {
     "quiet": True,
     #"extract_flat": False,
     "outtmpl": "downloads/%(id)s.%(ext)s",
-    "preferredcodec": "mp3",
 }
 
 # LOGGING
