@@ -7,6 +7,12 @@ import bot_data
 @data.bot.command()
 async def play(ctx, url: str):
 
+    # If user is not in a voice channel, prompt to join one
+    if not ctx.author.voice:
+        main.songs.clear()
+        await ctx.send("Join a voice channel first!")
+        return
+
     main.song = main.get_song(url, ctx)
     main.songs.append(main.song)
 

@@ -44,12 +44,6 @@ async def runplay(ctx):
     global currentSong
     global indexCount
 
-    # If user is not in a voice channel, prompt to join one
-    if not ctx.author.voice:
-        songs.clear()
-        await ctx.send("Join a voice channel first!")
-        return
-
     try:
         vc_to_join = ctx.author.voice.channel
 
