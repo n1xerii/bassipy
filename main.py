@@ -10,10 +10,10 @@ import data
 is_searching = False
 
 song = None
-currentSong = None
+current_song = None
 songs = []
 
-indexCount = 0
+index_count = 0
 
 def get_song(urlToUse, ctx):
     try:
@@ -40,8 +40,8 @@ async def disconnect_from_voice(ctx):
 # PLAY COMMAND
 # | Plays a link from YouTube in a Discord voice channel
 async def runplay(ctx):
-    global currentSong
-    global indexCount
+    global current_song
+    global index_count
 
     try:
         vc_to_join = ctx.author.voice.channel
@@ -51,23 +51,23 @@ async def runplay(ctx):
             data.vc_conn = await vc_to_join.connect()
 
         if len(songs) > 0:
-            if indexCount >= len(songs):
+            if index_count >= len(songs):
                 songs.clear()
-                currentSong = None
-                indexCount = 0
+                current_song = None
+                index_count = 0
                 print("--- Clearing songs and resetting index counter.")
                 return
 
-            currentSong = songs[indexCount]
-            indexCount += 1
+            current_song = songs[index_count]
+            index_count += 1
 
         # Making sure file exists before playing
-        if not os.path.isfile(currentSong):
-            print(f"Audio file not found: {currentSong}")
+        if not os.path.isfile(current_song):
+            print(f"Audio file not found: {current_song}")
             await ctx.send("Error with audio file!")
             return
 
-        audio_source = FFmpegOpusAudio(currentSong, executable=data.ffmpeg)
+        audio_source = FFmpegOpusAudio(current_song, executable=data.ffmpeg)
         #audio_source = FFmpegPCMAudio(currentSong, executable=data.ffmpeg)
         data.vc_conn.play(audio_source)
 
