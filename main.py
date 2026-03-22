@@ -2,7 +2,7 @@ import os
 import asyncio
 import discord
 import yt_dlp
-from discord import FFmpegOpusAudio
+from discord import FFmpegOpusAudio, FFmpegAudio, FFmpegPCMAudio
 
 import data
 
@@ -68,6 +68,7 @@ async def runplay(ctx):
             return
 
         audio_source = FFmpegOpusAudio(currentSong, executable=data.ffmpeg)
+        #audio_source = FFmpegPCMAudio(currentSong, executable=data.ffmpeg)
         data.vc_conn.play(audio_source)
 
         while data.vc_conn.is_playing():
