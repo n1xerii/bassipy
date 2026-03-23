@@ -94,7 +94,6 @@ async def runskip(ctx):
 
     if data.vc_conn.is_playing():
         data.vc_conn.stop()
-        index_count = index_count + 1
 
         await ctx.send("Song skipped!")
         await runplay(ctx)
