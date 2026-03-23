@@ -1,8 +1,16 @@
 import discord
-import yt_dlp as youtube_dl
-from discord import FFmpegOpusAudio
 from discord.ext import commands
 import logging
+
+# INTENTS
+intents = discord.Intents.default()
+intents.message_content = True
+intents.voice_states = True
+intents.bans = False
+intents.auto_moderation = False
+
+# BOT
+bot = commands.Bot(command_prefix="!", intents=intents, case_insensitive=True, max_ratelimit_timeout=10)
 
 # FFMPEG
 ffmpeg = 'ffmpeg'
@@ -10,19 +18,14 @@ ffmpeg = 'ffmpeg'
 # CONNECTION
 vc_conn = None
 
-# YOUTUBE DOWNLOAD OPTIONS
+# YDL OPTIONS
 ydl_options = {
-    'format': 'bestaudio/best',
-    'quiet': True,
-    'outtmpl': 'downloads/%(id)s.%(ext)s',
+    "format": "bestaudio/best",
+    "noplaylist": True,
+    "quiet": True,
+    #"extract_flat": False,
+    "outtmpl": "downloads/%(id)s.%(ext)s",
 }
 
-# INTENTS
-intents = discord.Intents.default()
-intents.message_content = True
-
-# BOT
-bot = commands.Bot(command_prefix="!", intents=intents)
-
 # LOGGING
-logging.basicConfig(level=logging.ERROR, filename="bot_errors.log")
+logging.basicConfig(filename="bot.log")
