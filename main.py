@@ -68,7 +68,7 @@ async def runplay(ctx):
             return
 
         audio_source = FFmpegOpusAudio(current_song, executable=data.ffmpeg)
-        #audio_source = FFmpegPCMAudio(currentSong, executable=data.ffmpeg)
+        #audio_source = FFmpegPCMAudio(current_song, executable=data.ffmpeg)
         data.vc_conn.play(audio_source)
 
         while data.vc_conn.is_playing():
