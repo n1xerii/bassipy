@@ -14,13 +14,20 @@ bot = commands.Bot(command_prefix="!", intents=intents, case_insensitive=True, m
 
 # FFMPEG
 ffmpeg = 'ffmpeg'
+ffmpeg_options = {
+    'before_options': (
+        '-reconnect 1 '
+        '-reconnect_streamed 1 '
+        '-reconnect_delay_max 5'
+    )
+}
 
 # CONNECTION
 vc_conn = None
 
 # YDL OPTIONS
 ydl_options = {
-    "format": "bestaudio/best",
+    "format": "bestaudio/best", # just "bestaudio" ??
     "noplaylist": True,
     "quiet": True,
     #"extract_flat": False,

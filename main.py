@@ -19,15 +19,17 @@ def get_song(urlToUse, ctx):
     try:
         # Prepare file
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
-            info = ydl.extract_info(urlToUse, download=True)
+            #info = ydl.extract_info(urlToUse, download=True)
 
-            ydl.sanitize_info(info)
+            info = ydl.extract_info(urlToUse, download=False)
 
-            audioFile = ydl.prepare_filename(info)
+            song_url = info['url']
+            #ydl.sanitize_info(info)
+            #audioFile = ydl.prepare_filename(info)
 
-            return audioFile
+            return song_url
+            #return audioFile
     except Exception as e:
-        ctx.send("Song added to queue!")
         print(f"--- An error occurred: {e}")
         return None
 
@@ -61,14 +63,22 @@ async def runplay(ctx):
             current_song = songs[index_count]
             index_count += 1
 
-        # Making sure file exists before playing
-        if not os.path.isfile(current_song):
-            print(f"Audio file not found: {current_song}")
-            await ctx.send("Error with audio file!")
-            return
+        # Making sure file exists before playing / not needed for streaming
+        #if not os.path.isfile(current_song):
+        #    print(f"Audio file not found: {current_song}")
+        #    await ctx.send("Error with audio file!")
+        #    return
 
-        audio_source = FFmpegOpusAudio(current_song, executable=data.ffmpeg)
+        #audio_source = FFmpegOpusAudio(current_song, executable=data.ffmpeg)
         #audio_source = FFmpegPCMAudio(current_song, executable=data.ffmpeg)
+        #data.vc_conn.play(audio_source)
+
+        audio_source = FFmpegOpusAudio(
+            current_song,
+            executable=data.ffmpeg,
+            **data.ffmpeg_options
+        )
+
         data.vc_conn.play(audio_source)
 
         while data.vc_conn.is_playing():
@@ -80,7 +90,6 @@ async def runplay(ctx):
     except Exception as e:
         print(f"--- An error occurred in runplay: {e}")
         return
-
 
 # SKIP COMMAND
 # | Skips the currently playing song
@@ -98,7 +107,6 @@ async def runskip(ctx):
         await ctx.send("Song skipped!")
         await runplay(ctx)
         return
-
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
