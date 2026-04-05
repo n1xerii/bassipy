@@ -17,18 +17,13 @@ index_count = 0
 
 def get_song(urlToUse, ctx):
     try:
-        # Prepare file
+        # Prepare song url
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
-            #info = ydl.extract_info(urlToUse, download=True)
-
             info = ydl.extract_info(urlToUse, download=False)
 
             song_url = info['url']
-            #ydl.sanitize_info(info)
-            #audioFile = ydl.prepare_filename(info)
 
             return song_url
-            #return audioFile
     except Exception as e:
         print(f"--- An error occurred: {e}")
         return None
@@ -57,21 +52,11 @@ async def runplay(ctx):
                 songs.clear()
                 current_song = None
                 index_count = 0
-                print("--- Clearing songs and resetting index counter.")
+                print("--- Clearing songs and resetting song index.")
                 return
 
             current_song = songs[index_count]
             index_count += 1
-
-        # Making sure file exists before playing / not needed for streaming
-        #if not os.path.isfile(current_song):
-        #    print(f"Audio file not found: {current_song}")
-        #    await ctx.send("Error with audio file!")
-        #    return
-
-        #audio_source = FFmpegOpusAudio(current_song, executable=data.ffmpeg)
-        #audio_source = FFmpegPCMAudio(current_song, executable=data.ffmpeg)
-        #data.vc_conn.play(audio_source)
 
         audio_source = FFmpegOpusAudio(
             current_song,
