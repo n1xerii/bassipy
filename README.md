@@ -3,27 +3,26 @@
 ---
 
 ## INFO
-Bassipy is a locally runnable Discord bot made for playing music in Discord voice channels.
-It is written in Python and uses FFmpeg with yt-dlp and discord.py python packages.
-Bassipy is supposed to be a simple bot and contains 3 main commands, "play", "skip" and "search". They can be used by typing the prefix(!) following with the command(eg. !search).
-The PLAY command takes a youtube link and plays it(eg. !play https://www.youtube.com/watch?v=dQw4w9WgXcQ).  
-The SEARCH command searchs the top 5 results of an argument using yt-dlp(eg. !search rap).   
-The SKIP command skips/stops the currently playing song.  
-The bot does not feature a queue yet and only plays one song at a time. It works by downloading an audio file first and then playing it, which might be an issue for some people because of extra downloads and network traffic. I am planning to move to a streaming approach instead of downloading files.
+Bassipy is a locally running Discord bot made for playing music in voice channels.
+It uses 'discord.py' and 'yt-dlp' and is written in Python.
+Bassipy is supposed to be a simple bot and only features 3 main commands, "play", "skip" and "search". The command can be used by typing the prefix(!) following with the command(eg. !search).
+The PLAY command takes a youtube link and plays it(eg. !play https://www.youtube.com/watch?v=dQw4w9WgXcQ), or if a song is already playing, it adds the song to the queue.
+The SEARCH command searchs the top 5 results of an argument using yt-dlp(eg. !search rap).
+The SKIP command skips/stops the currently playing song.
 
 ---
 
 ## HOW TO USE (WINDOWS)
 ### Setting up environment
-1. Clone the repository  
+1. Clone the repository
  `git clone https://github.com/n1xerii/bassipy.git`
-2. Go inside the cloned folder  
+2. Go inside the cloned folder
  `cd bassipy`
-3. Create a new Python environment (I recommend conda)  
+3. Create a new Python environment (I recommend conda)
  `conda create -n bassipy python=3.11` or `python -m venv bassipy`
-4. Activate the environment  
+4. Activate the environment
  `conda activate bassipy` or `venv\Scripts\activate.bat`
-5. Install the requirements  
+5. Install the requirements
  `pip install -r requirements.txt`
 
 ### Setting up bot_data.py
