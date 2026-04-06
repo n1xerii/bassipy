@@ -1,12 +1,9 @@
-import os
 import asyncio
-import discord
 import yt_dlp
-from discord import FFmpegOpusAudio, FFmpegAudio, FFmpegPCMAudio
+from discord import FFmpegOpusAudio
 
 import data
 
-#is_playing = False
 is_searching = False
 
 song = None
@@ -81,10 +78,6 @@ async def runplay(ctx):
 async def runskip(ctx):
     global current_song
     global index_count
-
-    if not data.vc_conn.is_connected():
-        await ctx.send("Not connected to voice channel.")
-        return
 
     if data.vc_conn.is_playing():
         data.vc_conn.stop()
