@@ -22,11 +22,11 @@ def get_song(urlToUse, ctx):
 
             return song_url
     except Exception as e:
-        print(f"--- An error occurred: {e}")
+        print(f"--- [BASSIPY] : An error occurred in get_song: {e}")
         return None
 
 async def disconnect_from_voice(ctx):
-    if data.vc_conn is None:
+    if data.vc_conn is None or data.vc_conn.is_connected():
         return
 
     await data.vc_conn.disconnect()
@@ -40,14 +40,21 @@ async def runplay(ctx):
     try:
         if len(songs) > 0:
             if index_count >= len(songs):
-                songs.clear()
                 current_song = None
+                songs.clear()
                 index_count = 0
-                print("--- Clearing songs and resetting song index.")
+                print("--- [BASSIPY] : Queue finished. Clearing songs and resetting song index.")
+                await ctx.send("Finished playing.")
                 return
 
             current_song = songs[index_count]
             index_count += 1
+            print(f"--- [BASSIPY] : current_song: {current_song}")
+
+        if current_song is None:
+            print(f"--- [BASSIPY] : error occurred with song url: {current_song}")
+            await ctx.send("Unknown error occurred with song url.")
+            return
 
         audio_source = FFmpegOpusAudio(
             current_song,
@@ -60,11 +67,11 @@ async def runplay(ctx):
         while data.vc_conn.is_playing():
             await asyncio.sleep(1)
 
-        await ctx.send("Finished playing song.")
+        await ctx.send("Starting next song.")
         await asyncio.sleep(1)
         await runplay(ctx)
     except Exception as e:
-        print(f"--- An error occurred in runplay: {e}")
+        print(f"--- [BASSIPY] : An error occurred in runplay: {e}")
         return
 
 # SKIP COMMAND

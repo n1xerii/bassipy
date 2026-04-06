@@ -9,7 +9,6 @@ async def play(ctx, url: str):
 
     # If user is not in a voice channel, prompt to join one
     if not ctx.author.voice:
-        main.songs.clear()
         await ctx.send("Join a voice channel first!")
         return
 
@@ -18,6 +17,10 @@ async def play(ctx, url: str):
     # Connect to the voice channel
     if data.vc_conn is None:
         data.vc_conn = await vc_to_join.connect()
+
+    if not data.vc_conn.is_connected():
+        main.songs.clear()
+        await vc_to_join.connect()
 
     main.song = main.get_song(url, ctx)
     main.songs.append(main.song)
