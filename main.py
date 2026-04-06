@@ -38,12 +38,6 @@ async def runplay(ctx):
     global index_count
 
     try:
-        vc_to_join = ctx.author.voice.channel
-
-        # Connect to the voice channel
-        if data.vc_conn is None:
-            data.vc_conn = await vc_to_join.connect()
-
         if len(songs) > 0:
             if index_count >= len(songs):
                 songs.clear()

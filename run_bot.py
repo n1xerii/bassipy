@@ -13,6 +13,12 @@ async def play(ctx, url: str):
         await ctx.send("Join a voice channel first!")
         return
 
+    vc_to_join = ctx.author.voice.channel
+
+    # Connect to the voice channel
+    if data.vc_conn is None:
+        data.vc_conn = await vc_to_join.connect()
+
     main.song = main.get_song(url, ctx)
     main.songs.append(main.song)
 
