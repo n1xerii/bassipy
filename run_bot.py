@@ -21,16 +21,13 @@ async def play(ctx, url: str):
 
     main.song = main.get_song(url, ctx)
     main.songs.append(main.song)
+    await ctx.send("Song added to queue!")
 
-    if len(main.songs) == 1:
+    if len(main.songs) == 1 and not data.vc_conn.is_playing():
         await ctx.send("Playing started!")
-    else:
-        await ctx.send("Song added to queue!")
 
-    if data.vc_conn is None:
-        await main.runplay(ctx)
-
-    if data.vc_conn is not None and data.vc_conn.is_connected():
+    #if data.vc_conn is not None and data.vc_conn.is_connected():
+    if data.vc_conn.is_connected():
         if data.vc_conn.is_playing():
             return
         else:
@@ -45,7 +42,7 @@ async def skip(ctx):
             await ctx.send("No voice connection.")
             return
 
-        if not ctx.author.voice.channel:
+        if not ctx.author.voice:
             await ctx.send("Join a voice channel first!")
             return
 
