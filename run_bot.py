@@ -29,7 +29,6 @@ async def play(ctx, url: str):
     if len(main.songs) == 1 and not data.vc_conn.is_playing():
         await ctx.send("Playing started!")
 
-    #if data.vc_conn is not None and data.vc_conn.is_connected():
     if data.vc_conn.is_connected():
         if data.vc_conn.is_playing():
             return
@@ -73,10 +72,11 @@ async def ping(ctx):
         await ctx.send(f'Pong! Latency is {round(data.bot.latency * 1000)}ms')
     except Exception as e:
         await ctx.send("Unknown error occurred.")
-        print(f"--- An error occurred. Error: {e}")
+        print(f"--- Unknown error occurred: {e}")
         return
 
 def Main():
+    # Platform check
     if bot_data.my_platform.lower() == "windows":
         data.ffmpeg = os.path.join(os.path.dirname(__file__), 'ffmpeg', 'ffmpeg.exe')
     elif bot_data.my_platform.lower() == "linux":
@@ -85,7 +85,7 @@ def Main():
         print("--- No platform provided.")
         return
 
-    # RUN BOT
+    # Starting bot
     if bot_data.my_token is None or bot_data.my_token == "":
         print("--- No token provided.")
         return
