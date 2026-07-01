@@ -77,8 +77,8 @@ async def runplay(ctx):
 # SKIP COMMAND
 # | Skips the currently playing song
 async def runskip(ctx):
-    global current_song
-    global index_count
+    #global current_song
+    #global index_count
 
     if data.vc_conn.is_playing():
         data.vc_conn.stop()
