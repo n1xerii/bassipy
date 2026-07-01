@@ -54,8 +54,6 @@ async def skip(ctx):
 
         await main.runskip(ctx)
 
-"""
-### Temporarily disabled for clarity
 @data.bot.command()
 async def search(ctx, *, arg):
     
@@ -64,7 +62,6 @@ async def search(ctx, *, arg):
         return
 
     await main.runsearch(ctx, arg=arg)
-"""
 
 @data.bot.command()
 async def ping(ctx):

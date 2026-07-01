@@ -1,5 +1,6 @@
 import asyncio
 import yt_dlp
+import discord
 from discord import FFmpegOpusAudio
 
 import data
@@ -89,7 +90,6 @@ async def runskip(ctx):
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
-""" Disabled for clarity
 async def runsearch(ctx, *, arg):
     global is_searching
     
@@ -111,23 +111,25 @@ async def runsearch(ctx, *, arg):
 
         view = discord.ui.View()
 
-        # Loop through results in "videos"
+        # Loop through video results
         for index, vid in enumerate(videos):
             vidTitle = vid['title']
             vidUrl = vid['webpage_url']
 
-            # Construction of buttons
+            # Creation of buttons
             button = discord.ui.Button(
                 label=f"{index + 1}.{vidTitle[:40]}",
                 style=discord.ButtonStyle.primary
             )
 
-            # Callback after button is clicked
+            # Button click callback
             async def callback(interaction, url=vidUrl):
                 global is_searching
                 
-                await ctx.send(f"**SELECTED VIDEO**: {url}")
-                #await runplay(ctx, url)    # Call "play" command to play the selected video / Temporarily disabled
+                await ctx.send(f"**SELECTED SONG** : {url}")
+                song_url = get_song(url, ctx)
+                songs.append(song_url)
+                await runplay(ctx)
                 is_searching = False
 
             button.callback = callback
@@ -135,9 +137,8 @@ async def runsearch(ctx, *, arg):
             # Add button to view
             view.add_item(button)
 
-        await ctx.send("**SELECT VIDEO**", view=view)
+        await ctx.send("**SELECT SONG**", view=view)
         is_searching = False
     except Exception as e:
         await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
-"""
