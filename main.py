@@ -1,5 +1,6 @@
 import asyncio
 import yt_dlp
+import discord
 from discord import FFmpegOpusAudio
 
 import data
