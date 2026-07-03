@@ -29,6 +29,12 @@ async def play(ctx, url: str):
     if len(main.songs) == 1 and not data.vc_conn.is_playing():
         await ctx.send("Playing started!")
 
+    await ctx.send(f"**| 🎵 QUEUE |**\n")
+    for s in main.songs:
+        await ctx.send(
+            f"- *{s['title']}*\n"
+        )
+
     if data.vc_conn.is_connected():
         await main.song_player(ctx)
     else:
