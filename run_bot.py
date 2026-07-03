@@ -72,6 +72,7 @@ async def ping(ctx):
         print(f"--- Unknown error occurred: {e}")
         return
 
+
 def Main():
     # Platform check
     if bot_data.my_platform.lower() == "windows":
@@ -89,7 +90,7 @@ def Main():
         print("--- No platform provided.")
         return
 
-    # Starting bot
+    # Start bot
     if bot_data.my_token is None or bot_data.my_token == "":
         print("--- No token provided.")
         return

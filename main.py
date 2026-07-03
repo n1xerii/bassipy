@@ -53,8 +53,8 @@ async def runplay(ctx):
             print(f"--- [BASSIPY] : current_song: {current_song}")
 
         if current_song is None:
-            print(f"--- [BASSIPY] : error occurred with song url: {current_song}")
-            await ctx.send("Unknown error occurred with song url.")
+            print(f"--- [BASSIPY] : error occurred with song url: {current_song['url']}")
+            await ctx.send(f"Unknown error with song url:  {current_song['url']}")
             return
 
         audio_source = FFmpegOpusAudio(
@@ -72,7 +72,7 @@ async def runplay(ctx):
         await asyncio.sleep(1)
         await runplay(ctx)
     except Exception as e:
-        print(f"--- [BASSIPY] : An error occurred in runplay: {e}")
+        print(f"--- [BASSIPY] : An error occurred in play: {e}")
         return
 
 # SKIP COMMAND
