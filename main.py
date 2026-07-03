@@ -90,8 +90,7 @@ async def runskip(ctx):
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
-""" Disabled for clarity
-async def runsearch(ctx, *, arg):
+async def song_searcher(ctx, *, arg):
     global is_searching
     
     try:
@@ -141,4 +140,3 @@ async def runsearch(ctx, *, arg):
     except Exception as e:
         await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
-"""

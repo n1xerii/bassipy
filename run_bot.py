@@ -58,10 +58,11 @@ async def skip(ctx):
 async def search(ctx, *, arg):
     
     if main.is_searching:
-        await ctx.send("Already searching.")
+        await ctx.send("Wait for current search to end.")
         return
 
-    await main.runsearch(ctx, arg=arg)
+    await main.song_searcher(ctx, arg=arg)
+
 
 @data.bot.command()
 async def ping(ctx):
