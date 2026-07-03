@@ -7,7 +7,6 @@ import data
 
 is_searching = False
 
-song = None
 current_song = None
 songs = []
 
