@@ -22,10 +22,10 @@ async def play(ctx, url: str):
         main.songs.clear()
         await vc_to_join.connect()
 
-    main.song = main.get_song(url, ctx)
-    main.songs.append(main.song)
-    await ctx.send("Song added to queue!")
+    song = main.get_song_data(url, ctx)
+    main.add_song_to_queue(song)
 
+    # Check for first song
     if len(main.songs) == 1 and not data.vc_conn.is_playing():
         await ctx.send("Playing started!")
 

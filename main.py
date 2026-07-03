@@ -12,18 +12,21 @@ songs = []
 
 index_count = 0
 
-def get_song(urlToUse, ctx):
+def get_song_data(song_url, ctx):
     try:
         # Prepare song url
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
-            info = ydl.extract_info(urlToUse, download=False)
+            info = ydl.extract_info(song_url, download=False)
 
-            song_url = info['url']
+            song_info = info
 
-            return song_url
+            return song_info
     except Exception as e:
         print(f"--- [BASSIPY] : An error occurred in get_song: {e}")
         return None
+    
+def add_song_to_queue(url):
+    songs.append(url)
 
 async def disconnect_from_voice(ctx):
     if data.vc_conn is None or data.vc_conn.is_connected():
@@ -49,7 +52,7 @@ async def song_player(ctx):
 
             current_song = songs[index_count]
             index_count += 1
-            print(f"--- [BASSIPY] : current_song: {current_song}")
+            print(f"--- [BASSIPY] : current_song: {current_song['title']}")
 
         if current_song is None:
             print(f"--- [BASSIPY] : error occurred with song url: {current_song['url']}")
@@ -57,7 +60,7 @@ async def song_player(ctx):
             return
 
         audio_source = FFmpegOpusAudio(
-            current_song,
+            current_song['url'],
             executable=data.ffmpeg,
             **data.ffmpeg_options
         )
@@ -74,6 +77,7 @@ async def song_player(ctx):
         print(f"--- [BASSIPY] : An error occurred in play: {e}")
         return
 
+
 # SKIP COMMAND
 # | Skips the currently playing song
 async def song_skipper(ctx):
@@ -83,6 +87,9 @@ async def song_skipper(ctx):
         await ctx.send("Song skipped!")
         await song_player(ctx)
         return
+    else:
+        await ctx.send("Not playing a song.")
+
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
