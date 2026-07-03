@@ -30,29 +30,27 @@ async def play(ctx, url: str):
         await ctx.send("Playing started!")
 
     if data.vc_conn.is_connected():
-        if data.vc_conn.is_playing():
-            return
-        else:
-            await main.runplay(ctx)
+        await main.song_player(ctx)
     else:
-        await main.runplay(ctx)
+        print("No connection. Unknown reason.")
+
 
 @data.bot.command()
 async def skip(ctx):
+        if not ctx.author.voice:
+            await ctx.send("Not in a voice channel.")
+            return
 
         if data.vc_conn is None:
             await ctx.send("No voice connection.")
-            return
-
-        if not ctx.author.voice:
-            await ctx.send("Join a voice channel first!")
             return
 
         if main.is_searching:
             await ctx.send("Wait for search to end.")
             return
 
-        await main.runskip(ctx)
+        await main.song_skipper(ctx)
+
 
 @data.bot.command()
 async def search(ctx, *, arg):

@@ -33,12 +33,11 @@ async def disconnect_from_voice(ctx):
 
 # PLAY COMMAND
 # | Plays a link from YouTube in a Discord voice channel
-async def runplay(ctx):
+async def song_player(ctx):
     global current_song
     global index_count
 
     try:
-        
         if len(songs) > 0:
             if index_count >= len(songs):
                 current_song = None
@@ -70,22 +69,19 @@ async def runplay(ctx):
 
         await ctx.send("Starting next song.")
         await asyncio.sleep(1)
-        await runplay(ctx)
+        await song_player(ctx)
     except Exception as e:
         print(f"--- [BASSIPY] : An error occurred in play: {e}")
         return
 
 # SKIP COMMAND
 # | Skips the currently playing song
-async def runskip(ctx):
-    #global current_song
-    #global index_count
-
+async def song_skipper(ctx):
     if data.vc_conn.is_playing():
         data.vc_conn.stop()
 
         await ctx.send("Song skipped!")
-        await runplay(ctx)
+        await song_player(ctx)
         return
 
 # SEARCH COMMAND
@@ -127,7 +123,8 @@ async def song_searcher(ctx, *, arg):
                 global is_searching
                 
                 await ctx.send(f"**SELECTED VIDEO**: {url}")
-                #await runplay(ctx, url)    # Call "play" command to play the selected video / Temporarily disabled
+                await song_player(ctx)
+
                 is_searching = False
 
             button.callback = callback
