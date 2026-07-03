@@ -1,6 +1,5 @@
 import asyncio
 import yt_dlp
-import discord
 from discord import FFmpegOpusAudio
 
 import data
@@ -39,6 +38,7 @@ async def runplay(ctx):
     global index_count
 
     try:
+        
         if len(songs) > 0:
             if index_count >= len(songs):
                 current_song = None
@@ -90,6 +90,7 @@ async def runskip(ctx):
 
 # SEARCH COMMAND
 # | Searches 5 top results for "arg" from YouTube and lets user choose which one to play
+""" Disabled for clarity
 async def runsearch(ctx, *, arg):
     global is_searching
     
@@ -111,25 +112,23 @@ async def runsearch(ctx, *, arg):
 
         view = discord.ui.View()
 
-        # Loop through video results
+        # Loop through results in "videos"
         for index, vid in enumerate(videos):
             vidTitle = vid['title']
             vidUrl = vid['webpage_url']
 
-            # Creation of buttons
+            # Construction of buttons
             button = discord.ui.Button(
                 label=f"{index + 1}.{vidTitle[:40]}",
                 style=discord.ButtonStyle.primary
             )
 
-            # Button click callback
+            # Callback after button is clicked
             async def callback(interaction, url=vidUrl):
                 global is_searching
                 
-                await ctx.send(f"**SELECTED SONG** : {url}")
-                song_url = get_song(url, ctx)
-                songs.append(song_url)
-                await runplay(ctx)
+                await ctx.send(f"**SELECTED VIDEO**: {url}")
+                #await runplay(ctx, url)    # Call "play" command to play the selected video / Temporarily disabled
                 is_searching = False
 
             button.callback = callback
@@ -137,8 +136,9 @@ async def runsearch(ctx, *, arg):
             # Add button to view
             view.add_item(button)
 
-        await ctx.send("**SELECT SONG**", view=view)
+        await ctx.send("**SELECT VIDEO**", view=view)
         is_searching = False
     except Exception as e:
         await ctx.send(f"--- An error occurred while searching. Error: {e}")
         return
+"""
