@@ -25,8 +25,8 @@ def get_song_data(song_url, ctx):
         print(f"--- [BASSIPY] : An error occurred in get_song: {e}")
         return None
     
-def add_song_to_queue(url):
-    songs.append(url)
+def add_song_to_queue(song):
+    songs.append(song)
 
 async def disconnect_from_voice(ctx):
     if data.vc_conn is None or data.vc_conn.is_connected():
@@ -68,6 +68,10 @@ async def song_player(ctx):
         data.vc_conn.play(audio_source)
 
         while data.vc_conn.is_playing():
+            print(index_count)
+            print(f"current song = {current_song['title']}")
+            for s in songs:
+                print(s['title'])
             await asyncio.sleep(1)
 
         await ctx.send("Starting next song.")
@@ -85,6 +89,7 @@ async def song_skipper(ctx):
         data.vc_conn.stop()
 
         await ctx.send("Song skipped!")
+        current_song = None
         await song_player(ctx)
         return
     else:
@@ -101,11 +106,11 @@ async def song_searcher(ctx, *, arg):
 
         is_searching = True
         
-        # Call "ytsearch5" from ytdlp and populate "videos" with the result
+        # Use ytdlp to fetch 5 songs
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
-            videos = ydl.extract_info(f"ytsearch5:{arg}", download=False)   # Returns a dictionary with results
-            
-        # Ensure that "videos" is valid
+            videos = ydl.extract_info(f"ytsearch5:{arg}", download=False)
+        
+        # Ensure that the songs are valid
         if videos is None or "entries" not in videos:
             await ctx.send("No results found.")
             return
@@ -114,26 +119,26 @@ async def song_searcher(ctx, *, arg):
 
         view = discord.ui.View()
 
-        # Loop through results in "videos"
+        # Loop through the songs
         for index, vid in enumerate(videos):
             vidTitle = vid['title']
             vidUrl = vid['webpage_url']
 
-            # Construction of buttons
+            # Make buttons
             button = discord.ui.Button(
                 label=f"{index + 1}.{vidTitle[:40]}",
                 style=discord.ButtonStyle.primary
             )
 
-            # Callback after button is clicked
+            # Button click/callback
             async def callback(interaction, url=vidUrl):
                 global is_searching
                 
                 await ctx.send(f"**SELECTED VIDEO**: {url}")
-                await song_player(ctx)
-
+                selected_song = get_song_data(url)
                 is_searching = False
-
+                return selected_song
+                #await song_player(ctx)
             button.callback = callback
 
             # Add button to view
@@ -142,5 +147,5 @@ async def song_searcher(ctx, *, arg):
         await ctx.send("**SELECT VIDEO**", view=view)
         is_searching = False
     except Exception as e:
-        await ctx.send(f"--- An error occurred while searching. Error: {e}")
+        await ctx.send(f"--- An error occurred with search: {e}")
         return
