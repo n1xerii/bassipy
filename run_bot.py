@@ -16,9 +16,8 @@ async def play(ctx, url: str):
     vc_to_join = ctx.author.voice.channel
 
     # Connect to the channel
-    #if data.vc_conn is None:
-    #    data.vc_conn = await vc_to_join.connect()
-
+    if data.vc_conn is None:
+        data.vc_conn = await vc_to_join.connect()
     if not data.vc_conn.is_connected():
         main.songs.clear()
         await vc_to_join.connect()
