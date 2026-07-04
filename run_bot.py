@@ -79,21 +79,8 @@ async def ping(ctx):
 
 
 def Main():
-    # Platform check
-    if bot_data.my_platform.lower() == "windows":
-        try:
-            data.ffmpeg = os.path.join(os.path.dirname(__file__), 'ffmpeg', 'ffmpeg.exe')
-        except Exception as e:
-            print(f"--- Unknown error occured: {e}")
-    elif bot_data.my_platform.lower() == "linux":
-        try:
-            data.ffmpeg = 'ffmpeg'
-        except Exception as e:
-            print(f"--- Error occured: {e}")
-            print(f"--- For Linux, use system-wide ffmpeg.")
-    else:
-        print("--- No platform provided.")
-        return
+    # Set ffmpeg to system-wide ffmpeg
+    data.ffmpeg = 'ffmpeg'
 
     # Start bot
     if bot_data.my_token is None or bot_data.my_token == "":
