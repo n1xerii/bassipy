@@ -36,6 +36,8 @@ async def play(ctx, url: str):
             f"- *{s['title']}*\n"
         )
 
+    if data.vc_conn.is_playing():
+        return
     await main.song_player(ctx)
 
     """
