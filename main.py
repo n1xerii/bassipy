@@ -24,7 +24,7 @@ def get_song_data(song_url, ctx):
     except Exception as e:
         print(f"--- [BASSIPY] : An error occurred in get_song: {e}")
         return None
-    
+
 def add_song_to_queue(song):
     songs.append(song)
 
@@ -68,10 +68,6 @@ async def song_player(ctx):
         data.vc_conn.play(audio_source)
 
         while data.vc_conn.is_playing():
-            print(index_count)
-            print(f"current song = {current_song['title']}")
-            for s in songs:
-                print(s['title'])
             await asyncio.sleep(1)
 
         await ctx.send("Starting next song.")
