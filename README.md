@@ -12,7 +12,7 @@ The SKIP command skips/stops the currently playing song.
 
 ---
 
-## HOW TO USE (WINDOWS)
+## HOW TO USE
 ### Setting up environment
 1. Clone the repository
  `git clone https://github.com/n1xerii/bassipy.git`
@@ -27,10 +27,9 @@ The SKIP command skips/stops the currently playing song.
 
 ### Setting up bot_data.py
 1. Add a new python file "bot_data.py" into the folder
-2. Open "bot_data.py" and add two lines: `my_token = ""` and `my_platform = ""`
-3. Create a variable for your Discord bot token `my_token = "yourtokenhere"` (DISCLAIMER: NEVER SHARE YOUR BOT TOKEN!)
-4. Create another variable for your platform, in this case we'll put Windows `my_platform = "Windows"`
-5. Save the file and you bot_data.py is ready!
+2. Open "bot_data.py" and add one line: `my_token = ""`
+3. Add your Discord bot token `my_token = "yourtokenhere"` (DISCLAIMER: NEVER SHARE YOUR TOKEN!)
+4. Save the file and your bot_data.py is ready!
 
 ### Install deno
 1. Install node.js for Windows from (https://nodejs.org/en/download) 
@@ -38,7 +37,7 @@ The SKIP command skips/stops the currently playing song.
 
 ### Running the bot
 1. Open Powershell or CMD.
-2. Navigate to the location of your bassipy cloned repository `cd path/to/folder`
+2. Navigate to your bassipy repository `cd path/to/folder`
 3. Run `python run_bot.py` in your terminal and the bot should start!
 
 ---
