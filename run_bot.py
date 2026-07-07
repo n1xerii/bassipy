@@ -40,13 +40,6 @@ async def play(ctx, url: str):
         return
     await main.song_player(ctx)
 
-    """
-    if data.vc_conn.is_connected():
-        await main.song_player(ctx)
-    else:
-        print("No connection. Unknown reason.")
-    """
-
 
 @data.bot.command()
 async def skip(ctx):
