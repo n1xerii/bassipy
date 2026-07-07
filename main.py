@@ -42,6 +42,7 @@ async def song_player(ctx):
 
     try:
         if len(songs) > 0:
+            """ OLD SYSTEM
             if index_count >= len(songs):
                 current_song = None
                 songs.clear()
@@ -50,12 +51,22 @@ async def song_player(ctx):
                 await ctx.send("Finished playing.")
                 return
 
-            current_song = songs[index_count]
-            index_count += 1
-            print(f"--- [BASSIPY] : current_song: {current_song['title']}")
+            #current_song = songs[index_count]
+            #index_count += 1
+            #print(f"--- [BASSIPY] : Song: {current_song['title']}")
+            """
+            # NEW SYSTEM
+            current_song = songs[0]
+            print(f"--- [BASSIPY] : Song: {current_song['title']}")
+        else:
+            current_song = None
+            songs.clear()
+            await ctx.send("Queue finished.")
+            print(f"--- [BASSIPY] : Queue finished.")
+            return
 
         if current_song is None:
-            print(f"--- [BASSIPY] : error occurred with song url: {current_song['url']}")
+            print(f"--- [BASSIPY] : Error occurred with song url: {current_song['url']}")
             await ctx.send(f"Unknown error with song url:  {current_song['url']}")
             return
 
@@ -70,8 +81,10 @@ async def song_player(ctx):
         while data.vc_conn.is_playing():
             await asyncio.sleep(1)
 
-        await ctx.send("Starting next song.")
-        await asyncio.sleep(1)
+        if len(songs) > 0:
+            songs.remove(current_song)
+
+        await asyncio.sleep(0.5)
         await song_player(ctx)
     except Exception as e:
         print(f"--- [BASSIPY] : An error occurred in play: {e}")
@@ -81,11 +94,15 @@ async def song_player(ctx):
 # SKIP COMMAND
 # | Skips the currently playing song
 async def song_skipper(ctx):
+    global current_song
+
     if data.vc_conn.is_playing():
         data.vc_conn.stop()
 
-        await ctx.send("Song skipped!")
+        songs.remove(current_song)
         current_song = None
+        
+        await ctx.send("Song skipped!")
         await song_player(ctx)
         return
     else:
