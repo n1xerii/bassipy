@@ -3,7 +3,7 @@
 ---
 
 ## INFO
-Bassipy is a locally running Discord bot made for playing music in voice channels.
+Bassipy is a self-hosted, easy to use Discord bot for playing music in voice channels.
 It is written in Python and uses 'discord.py' and 'yt-dlp'.
 
 ## COMMANDS
