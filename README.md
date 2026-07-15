@@ -42,7 +42,7 @@ SEARCH command takes an argument and searches the top 5 results for it(eg. !sear
 ### Running the bot
 1. Open your terminal(CMD or Powershell on Windows)
 2. Navigate to your bassipy repository `cd path/to/folder`
-3. Run `python run_bot.py` in your terminal and the bot should start!
+3. Run `python run_bot.py` and the bot should start!
 
 ---
  
