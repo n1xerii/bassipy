@@ -13,7 +13,7 @@ PLAY command plays a link from Youtube(eg. !play https://www.youtube.com/watch?v
 
 SKIP command skips the current song and plays the next one from the queue.
 
-SEARCH command takes an aargument and searches its top 5 results(eg. !search rap).
+SEARCH command takes an argument and searches the top 5 results for it(eg. !search rap).
 
 ---
 
