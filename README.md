@@ -41,7 +41,7 @@ SEARCH command takes an aargument and searches its top 5 results(eg. !search rap
 
 ### Running the bot
 1. Open your terminal(CMD or Powershell on Windows)
-2. Navigate to your bassipy repository `cd path/to/folder'
+2. Navigate to your bassipy repository `cd path/to/folder`
 3. Run `python run_bot.py` in your terminal and the bot should start!
 
 ---
