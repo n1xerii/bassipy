@@ -131,19 +131,23 @@ async def song_searcher(ctx, *, arg):
 
             # Button click/callback
             async def callback(interaction, url=vidUrl):
-                global is_searching
-                
-                await ctx.send(f"**SELECTED VIDEO**: {url}")
-                selected_song = get_song_data(url)
-                is_searching = False
-                return selected_song
+                selected_song = get_song_data(url, ctx)
+
+                songs.append(selected_song)
+                await ctx.send(f"**| SELECTED SONG |**: {selected_song['url']}")
+
+                if not data.vc_conn.is_playing():
+                    await song_player(ctx)
+                else:
+                    ctx.send("Added song to queue!")
             button.callback = callback
 
             # Add button to view
             view.add_item(button)
 
-        await ctx.send("**SELECT VIDEO**", view=view)
+        await ctx.send("**| SELECT SONG |**", view=view)
         is_searching = False
     except Exception as e:
-        await ctx.send(f"--- An error occurred with search: {e}")
+        await ctx.send(f"An unknown error occurred with search.")
+        print(f"Error in search: {e}")
         return

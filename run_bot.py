@@ -68,13 +68,7 @@ async def search(ctx, *, arg):
         await ctx.send("Wait for current search to end.")
         return
 
-    chosen_song = await main.song_searcher(ctx, arg=arg)
-    main.songs.append(chosen_song)
-
-    if data.vc_conn.is_playing():
-        await ctx.send("Added song to queue!")
-        return
-    await main.song_player(ctx)
+    await main.song_searcher(ctx, arg=arg)
 
 
 @data.bot.command()
