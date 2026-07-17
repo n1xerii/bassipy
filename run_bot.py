@@ -43,9 +43,9 @@ async def play(ctx, url: str):
 
 @data.bot.command()
 async def skip(ctx):
-        if not ctx.author.voice:
-            await ctx.send("Not in a voice channel.")
-            return
+        #if not ctx.author.voice:
+        #    await ctx.send("Not in a voice channel.")
+        #    return
 
         if data.vc_conn is None:
             await ctx.send("No voice connection.")
