@@ -60,7 +60,10 @@ async def skip(ctx):
 
 @data.bot.command()
 async def search(ctx, *, arg):
-    
+    if data.vc_conn is None:
+        vc_to_join = ctx.author.voice.channel
+        data.vc_conn = await vc_to_join.connect()
+
     if main.is_searching:
         await ctx.send("Wait for current search to end.")
         return
