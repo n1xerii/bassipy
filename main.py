@@ -134,7 +134,7 @@ async def song_searcher(ctx, *, arg):
                 selected_song = get_song_data(url, ctx)
 
                 songs.append(selected_song)
-                await ctx.send(f"**| SELECTED SONG |**: {selected_song['url']}")
+                await ctx.send(f"**| SELECTED SONG |**: {selected_song['title']}")
 
                 if not data.vc_conn.is_playing():
                     await song_player(ctx)
