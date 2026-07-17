@@ -70,6 +70,15 @@ async def search(ctx, *, arg):
 
     await main.song_searcher(ctx, arg=arg)
 
+@data.bot.command()
+async def queue(ctx):
+    if len(main.songs) <= 0:
+        await ctx.send("Queue is empty.")
+    else:
+        await ctx.send("**QUEUE**")
+        for s in main.songs:
+            await ctx.send(f"- {s['title']}")
+
 
 @data.bot.command()
 async def ping(ctx):
