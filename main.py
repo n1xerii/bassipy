@@ -42,20 +42,6 @@ async def song_player(ctx):
 
     try:
         if len(songs) > 0:
-            """ OLD SYSTEM
-            if index_count >= len(songs):
-                current_song = None
-                songs.clear()
-                index_count = 0
-                print("--- [BASSIPY] : Queue finished. Clearing songs and resetting song index.")
-                await ctx.send("Finished playing.")
-                return
-
-            #current_song = songs[index_count]
-            #index_count += 1
-            #print(f"--- [BASSIPY] : Song: {current_song['title']}")
-            """
-            # NEW SYSTEM
             current_song = songs[0]
             print(f"--- [BASSIPY] : Song: {current_song['title']}")
         else:
@@ -151,7 +137,6 @@ async def song_searcher(ctx, *, arg):
                 selected_song = get_song_data(url)
                 is_searching = False
                 return selected_song
-                #await song_player(ctx)
             button.callback = callback
 
             # Add button to view
