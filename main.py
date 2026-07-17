@@ -136,6 +136,10 @@ async def song_searcher(ctx, *, arg):
                 songs.append(selected_song)
                 await ctx.send(f"**| SELECTED SONG |**: {selected_song['title']}")
 
+                view.clear_items()
+
+                await interaction.response.edit_message(view=view)
+
                 if not data.vc_conn.is_playing():
                     await song_player(ctx)
                 else:
