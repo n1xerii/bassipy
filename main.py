@@ -139,7 +139,8 @@ async def song_searcher(ctx, *, arg):
                 if not data.vc_conn.is_playing():
                     await song_player(ctx)
                 else:
-                    ctx.send("Added song to queue!")
+                    await ctx.send("Added song to queue!")
+            
             button.callback = callback
 
             # Add button to view
