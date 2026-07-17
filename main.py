@@ -107,30 +107,30 @@ async def song_searcher(ctx, *, arg):
         
         # Use ytsearch5 from yt-dlp to get 5 songs
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
-            videos = ydl.extract_info(f"ytsearch5:{arg}", download=False)
+            extracted_songs = ydl.extract_info(f"ytsearch5:{arg}", download=False)
         
         # Ensure songs are valid
-        if videos is None or "entries" not in videos:
+        if extracted_songs is None or "entries" not in extracted_songs:
             await ctx.send("No results found.")
             return
 
-        videos = videos["entries"][:5]
+        extracted_songs = extracted_songs["entries"][:5]
 
         view = discord.ui.View()
 
         # Loop through the songs
-        for index, vid in enumerate(videos):
-            vidTitle = vid['title']
-            vidUrl = vid['webpage_url']
+        for index, vid in enumerate(extracted_songs):
+            song_title = vid['title']
+            song_url = vid['webpage_url']
 
             # Make buttons
             button = discord.ui.Button(
-                label=f"{index + 1}.{vidTitle[:40]}",
+                label=f"{index + 1}.{song_title[:40]}",
                 style=discord.ButtonStyle.primary
             )
 
             # Button click/callback
-            async def callback(interaction, url=vidUrl):
+            async def callback(interaction, url=song_url):
                 selected_song = get_song_data(url, ctx)
 
                 songs.append(selected_song)
