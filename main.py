@@ -119,11 +119,11 @@ async def song_searcher(ctx, *, arg):
 
         is_searching = True
         
-        # Use ytdlp to fetch 5 songs
+        # Use ytsearch5 from yt-dlp to get 5 songs
         with yt_dlp.YoutubeDL(data.ydl_options) as ydl:
             videos = ydl.extract_info(f"ytsearch5:{arg}", download=False)
         
-        # Ensure that the songs are valid
+        # Ensure songs are valid
         if videos is None or "entries" not in videos:
             await ctx.send("No results found.")
             return
