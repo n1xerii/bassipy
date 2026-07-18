@@ -7,13 +7,19 @@ Bassipy is a self-hosted, easy to use Discord bot for playing music in voice cha
 It is written in Python and uses `discord.py` and `yt-dlp`.
 
 ## COMMANDS
-Bassipy is meant to be easy to use and features 3 main commands, `play`, `skip` and `search`. These commands are used by typing the prefix(!) following with the command(eg. !search).
+Bassipy is meant to be easy to use and features a small amount of commands. They can be used by typing the prefix(!) following with the command(eg. !play).
 
-`PLAY` command plays a link from Youtube(eg. !play https://www.youtube.com/watch?v=dQw4w9WgXcQ). If a song is already playing, it adds the requested song to queue. 
+`PLAY` 
+Plays a link from Youtube(eg. !play https://www.youtube.com/watch?v=dQw4w9WgXcQ). If a song is already playing, it adds the requested song to queue. 
 
-`SKIP` command skips the current song and plays the next one from the queue.
+`SKIP` 
+Skips current song.
 
-`SEARCH` command takes an argument and searches the top 5 results for it(eg. !search rap).
+`SEARCH` 
+Takes an argument and searches top 5 results for it(eg. !search rap).
+
+'QUEUE' 
+Shows songs in queue.
 
 ---
 
