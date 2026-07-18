@@ -18,7 +18,7 @@ Skips current song.
 `SEARCH`  
 Takes an argument and searches top 5 results for it(eg. !search rap).
 
-'QUEUE'  
+`QUEUE`  
 Shows songs in queue.
 
 ---
