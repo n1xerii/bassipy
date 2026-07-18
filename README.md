@@ -9,16 +9,16 @@ It is written in Python and uses `discord.py` and `yt-dlp`.
 ## COMMANDS
 Bassipy is meant to be easy to use and features a small amount of commands. They can be used by typing the prefix(!) following with the command(eg. !play).
 
-`PLAY` 
+`PLAY`  
 Plays a link from Youtube(eg. !play https://www.youtube.com/watch?v=dQw4w9WgXcQ). If a song is already playing, it adds the requested song to queue. 
 
-`SKIP` 
+`SKIP`  
 Skips current song.
 
-`SEARCH` 
+`SEARCH`  
 Takes an argument and searches top 5 results for it(eg. !search rap).
 
-'QUEUE' 
+'QUEUE'  
 Shows songs in queue.
 
 ---
