@@ -72,12 +72,16 @@ async def search(ctx, *, arg):
 
 @data.bot.command()
 async def queue(ctx):
-    if len(main.songs) <= 0:
+    if not main.songs:
         await ctx.send("Queue is empty.")
-    else:
-        await ctx.send("**QUEUE**")
-        for s in main.songs:
-            await ctx.send(f"- {s['title']}")
+        return
+
+    message = "**QUEUE**\n" + "\n".join(
+        f"- {s['title']}" for s in main.songs
+    )
+
+    await ctx.send(message)
+
 
 
 @data.bot.command()
