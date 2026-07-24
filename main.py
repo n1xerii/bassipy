@@ -43,6 +43,7 @@ async def song_player(ctx):
     try:
         if len(songs) > 0:
             current_song = songs[0]
+            await ctx.send(f"Playing: {current_song}")
             print(f"--- [BASSIPY] : Song: {current_song['title']}")
         else:
             current_song = None
