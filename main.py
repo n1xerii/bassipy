@@ -48,8 +48,8 @@ async def song_player(ctx):
         else:
             current_song = None
             songs.clear()
+            print("--- [BASSIPY] : Queue finished.")
             await ctx.send("Queue finished.")
-            print(f"--- [BASSIPY] : Queue finished.")
             return
 
         if current_song is None:
@@ -151,9 +151,9 @@ async def song_searcher(ctx, *, arg):
             # Add button to view
             view.add_item(button)
 
-        await ctx.send("**| SELECT SONG |**", view=view)
+        await ctx.send(f"**SEARCH RESULT** *(requested by {ctx.author})*", view=view)
         is_searching = False
     except Exception as e:
-        await ctx.send(f"An unknown error occurred with search.")
         print(f"Error in search: {e}")
+        await ctx.send(f"An unknown error occurred with search.")
         return
