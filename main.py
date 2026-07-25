@@ -135,16 +135,13 @@ async def song_searcher(ctx, *, arg):
             async def callback(interaction, url=song_url):
                 selected_song = get_song_data(url, ctx)
 
-                songs.append(selected_song)
-                await ctx.send(f"**| SELECTED SONG |**: {selected_song['title']}")
-
-                view.clear_items()
-
-                await interaction.response.edit_message(view=view)
+                await ctx.send(f"**SELECTED SONG**: {selected_song['title']}")
                 #songs.append(selected_song)
                 await add_song_to_queue(selected_song, ctx)
 
                 if not data.vc_conn.is_playing():
+                    view.clear_items()
+                    await interaction.response.edit_message(view=view)
                     await song_player(ctx)
                 #else:
                     #await ctx.send("Added song to queue!")
