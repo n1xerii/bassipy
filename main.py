@@ -152,5 +152,6 @@ async def song_searcher(ctx, *, arg):
         is_searching = False
     except Exception as e:
         print(f"Error in search: {e}")
+        is_searching = False
         await ctx.send(f"An unknown error occurred with search.")
         return
