@@ -25,8 +25,9 @@ def get_song_data(song_url, ctx):
         print(f"--- [BASSIPY] : An error occurred in get_song: {e}")
         return None
 
-def add_song_to_queue(song):
+async def add_song_to_queue(song, ctx):
     songs.append(song)
+    await ctx.send("Added song to queue!")
 
 async def disconnect_from_voice(ctx):
     if data.vc_conn is None or data.vc_conn.is_connected():
@@ -143,9 +144,8 @@ async def song_searcher(ctx, *, arg):
 
                 if not data.vc_conn.is_playing():
                     await song_player(ctx)
-                else:
-                    await ctx.send("Added song to queue!")
-            
+                #else:
+                    #await ctx.send("Added song to queue!")
             button.callback = callback
 
             # Add button to view
