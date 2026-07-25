@@ -102,7 +102,7 @@ async def song_searcher(ctx, *, arg):
     global is_searching
     
     try:
-        await ctx.send("Searching... Please wait...")
+        await ctx.send("Searching...")
 
         is_searching = True
         
