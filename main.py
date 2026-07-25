@@ -141,6 +141,8 @@ async def song_searcher(ctx, *, arg):
                 view.clear_items()
 
                 await interaction.response.edit_message(view=view)
+                #songs.append(selected_song)
+                await add_song_to_queue(selected_song, ctx)
 
                 if not data.vc_conn.is_playing():
                     await song_player(ctx)
