@@ -27,11 +27,11 @@ vc_conn = None
 
 # YDL OPTIONS
 ydl_options = {
-    "format": "bestaudio/best", # just "bestaudio" ??
+    "format": "bestaudio/best",
     "noplaylist": True,
     "quiet": True,
     #"extract_flat": False,
-    "outtmpl": "downloads/%(id)s.%(ext)s",
+    #"outtmpl": "downloads/%(id)s.%(ext)s",
 }
 
 # LOGGING
