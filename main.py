@@ -76,6 +76,7 @@ async def song_player(ctx):
         await song_player(ctx)
     except Exception as e:
         print(f"--- [BASSIPY] : An error occurred in play: {e}")
+        await ctx.send(f"An unknown error occurred.")
         return
 
 
@@ -153,5 +154,5 @@ async def song_searcher(ctx, *, arg):
     except Exception as e:
         print(f"Error in search: {e}")
         is_searching = False
-        await ctx.send(f"An unknown error occurred with search.")
+        await ctx.send(f"An unknown error occurred.")
         return

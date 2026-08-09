@@ -89,8 +89,8 @@ async def ping(ctx):
     try:
         await ctx.send(f'Pong! Latency is {round(data.bot.latency * 1000)}ms')
     except Exception as e:
-        await ctx.send("Unknown error occurred.")
         print(f"--- Unknown error occurred: {e}")
+        await ctx.send("Unknown error occurred.")
         return
 
 
@@ -100,7 +100,7 @@ def Main():
 
     # Start bot
     if bot_data.my_token is None or bot_data.my_token == "":
-        print("--- No token provided.")
+        print("--- [BASSIPY] : No token provided.")
         return
     data.bot.run(bot_data.my_token)
 
