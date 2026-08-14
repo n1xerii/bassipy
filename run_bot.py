@@ -26,11 +26,8 @@ async def play(ctx, url: str):
     requested_song = main.get_song_data(url, ctx)
     await main.add_song_to_queue(requested_song, ctx)
 
-    await ctx.send(f"**| 🎵 QUEUE |**\n")
-    for s in main.songs:
-        await ctx.send(
-            f"- *{s['title']}*\n"
-        )
+    # Show queue
+    await queue(ctx)
 
     if data.vc_conn.is_playing():
         return
