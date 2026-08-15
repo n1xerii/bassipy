@@ -10,8 +10,6 @@ is_searching = False
 current_song = None
 songs = []
 
-index_count = 0
-
 def get_song_data(song_url, ctx):
     try:
         # Prepare song url
@@ -39,7 +37,6 @@ async def disconnect_from_voice(ctx):
 # | Plays a link from YouTube in a Discord voice channel
 async def song_player(ctx):
     global current_song
-    global index_count
 
     try:
         if len(songs) > 0:
