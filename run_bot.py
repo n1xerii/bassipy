@@ -6,7 +6,6 @@ import bot_data
 
 @data.bot.command()
 async def play(ctx, url: str):
-
     # If user is not in a voice channel, prompt to join one
     if not ctx.author.voice:
         await ctx.send("Join a voice channel first!")
@@ -15,7 +14,7 @@ async def play(ctx, url: str):
     # Voice channel of user
     vc_to_join = ctx.author.voice.channel
 
-    # Connect to the channel
+    # Connect to voice channel
     if data.vc_conn is None:
         data.vc_conn = await vc_to_join.connect()
     if not data.vc_conn.is_connected():
@@ -74,7 +73,6 @@ async def queue(ctx):
     )
 
     await ctx.send(message)
-
 
 
 @data.bot.command()

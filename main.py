@@ -62,8 +62,8 @@ async def song_player(ctx):
             return
 
         if current_song is None:
-            print(f"--- [BASSIPY] : Error occurred with song url: {current_song['url']}")
-            await ctx.send(f"Unknown error with song url:  {current_song['url']}")
+            print(f"--- [BASSIPY] : Error occurred with song: {current_song['url']}")
+            await ctx.send(f"Unknown error with song:  {current_song['url']}")
             return
 
         audio_source = FFmpegOpusAudio(
@@ -103,7 +103,7 @@ async def song_skipper(ctx):
         await song_player(ctx)
         return
     else:
-        await ctx.send("Not playing a song.")
+        await ctx.send("No song playing.")
 
 
 # SEARCH COMMAND
