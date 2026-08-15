@@ -74,7 +74,14 @@ async def song_player(ctx):
 
         data.vc_conn.play(audio_source)
 
-        while data.vc_conn.is_playing():
+        while True:
+            if data.vc_conn is None or not data.vc_conn.is_connected():
+                clear_queue()
+                break
+
+            if not data.vc_conn.is_playing():
+                break
+
             await asyncio.sleep(1)
 
         if len(songs) > 0:

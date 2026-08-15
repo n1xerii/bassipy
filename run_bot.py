@@ -4,6 +4,13 @@ import main
 import data
 import bot_data
 
+@data.bot.event
+async def on_voice_state_update(member, before, after):
+    if before.channel is not None and after.channel is None:
+        main.clear_queue()
+        data.vc_conn = None
+    return
+
 @data.bot.command()
 async def play(ctx, url: str):
     # If user is not in a voice channel, prompt to join one
