@@ -33,6 +33,11 @@ async def disconnect_from_voice(ctx):
 
     await data.vc_conn.disconnect()
 
+def currently_playing():
+    plstr = f"[ 🎶PLAYING ] \n {current_song['title']}"
+    return plstr
+
+
 # PLAY COMMAND
 # | Plays a link from YouTube in a Discord voice channel
 async def song_player(ctx):
@@ -41,8 +46,8 @@ async def song_player(ctx):
     try:
         if len(songs) > 0:
             current_song = songs[0]
-            await ctx.send(f"Playing: {current_song['title']}")
             print(f"--- [BASSIPY] : Song: {current_song['title']}")
+            await ctx.send(currently_playing())
         else:
             current_song = None
             songs.clear()
@@ -142,7 +147,6 @@ async def song_searcher(ctx, *, arg):
 
                 if not data.vc_conn.is_playing():
                     await song_player(ctx)
-
             button.callback = callback
 
             # Add button to view
