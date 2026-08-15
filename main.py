@@ -56,9 +56,8 @@ async def song_player(ctx):
             print(f"--- [BASSIPY] : Song: {current_song['title']}")
             await ctx.send(currently_playing())
         else:
-            current_song = None
-            songs.clear()
-            print("--- [BASSIPY] : Queue finished.")
+            clear_queue()
+            print("--- [BASSIPY] : All songs in queue finished.")
             await ctx.send("Queue finished.")
             return
 
