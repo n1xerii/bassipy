@@ -27,6 +27,13 @@ async def add_song_to_queue(song, ctx):
     songs.append(song)
     await ctx.send("Added song to queue!")
 
+def clear_queue():
+    current_song = None
+    if len(songs) == 0:
+        return
+    songs.clear()
+    print("--- [BASSIPY] : Queue cleared.")
+
 async def disconnect_from_voice(ctx):
     if data.vc_conn is None or data.vc_conn.is_connected():
         return
