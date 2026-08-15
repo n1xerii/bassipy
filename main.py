@@ -151,7 +151,7 @@ async def song_searcher(ctx, *, arg):
             async def callback(interaction, url=song_url):
                 selected_song = get_song_data(url, ctx)
 
-                await ctx.send(f"**SELECTED SONG**: {selected_song['title']}")
+                await ctx.send(f"**[ SELECTED SONG ]**: {selected_song['title']}")
                 await add_song_to_queue(selected_song, ctx)
 
                 # Clear results

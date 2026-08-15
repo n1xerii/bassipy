@@ -75,7 +75,7 @@ async def queue(ctx):
         await ctx.send("Queue is empty.")
         return
 
-    message = "**QUEUE**\n" + "\n".join(
+    message = "**[ 🎶QUEUE ]**\n" + "\n".join(
         f"- {s['title']}" for s in main.songs
     )
 
