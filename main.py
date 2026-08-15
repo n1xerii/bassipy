@@ -41,7 +41,7 @@ async def disconnect_from_voice(ctx):
     await data.vc_conn.disconnect()
 
 def currently_playing():
-    plstr = f"[ 🎶PLAYING ] \n {current_song['title']}"
+    plstr = f"**[ 🎶PLAYING ]** \n {current_song['title']}"
     return plstr
 
 
@@ -151,7 +151,7 @@ async def song_searcher(ctx, *, arg):
             async def callback(interaction, url=song_url):
                 selected_song = get_song_data(url, ctx)
 
-                await ctx.send(f"**[ SELECTED SONG ]**: {selected_song['title']}")
+                await ctx.send(f"**[ SELECTED SONG ]** \n {selected_song['title']}")
                 await add_song_to_queue(selected_song, ctx)
 
                 # Clear results
@@ -165,7 +165,7 @@ async def song_searcher(ctx, *, arg):
             # Add button to view
             view.add_item(button)
 
-        await ctx.send(f"**SEARCH** *(requested by {ctx.author})*", view=view)
+        await ctx.send(f"**[ SEARCH ]** *(requested by {ctx.author})*", view=view)
         is_searching = False
     except Exception as e:
         is_searching = False
