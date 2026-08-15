@@ -119,9 +119,9 @@ async def song_searcher(ctx, *, arg):
         view = discord.ui.View()
 
         # Loop through the songs
-        for index, vid in enumerate(extracted_songs):
-            song_title = vid['title']
-            song_url = vid['webpage_url']
+        for index, sng in enumerate(extracted_songs):
+            song_title = sng['title']
+            song_url = sng['webpage_url']
 
             # Make buttons
             button = discord.ui.Button(
@@ -136,9 +136,11 @@ async def song_searcher(ctx, *, arg):
                 await ctx.send(f"**SELECTED SONG**: {selected_song['title']}")
                 await add_song_to_queue(selected_song, ctx)
 
+                # Clear results
+                view.clear_items()
+                await interaction.response.edit_message(view=view)
+
                 if not data.vc_conn.is_playing():
-                    view.clear_items()
-                    await interaction.response.edit_message(view=view)
                     await song_player(ctx)
 
             button.callback = callback
@@ -149,7 +151,7 @@ async def song_searcher(ctx, *, arg):
         await ctx.send(f"**SEARCH** *(requested by {ctx.author})*", view=view)
         is_searching = False
     except Exception as e:
-        print(f"Error in search: {e}")
         is_searching = False
+        print(f"An error occurred in search: {e}")
         await ctx.send(f"An unknown error occurred.")
         return
