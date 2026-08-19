@@ -16,7 +16,7 @@ Bassipy features a few commands which can be used by typing the prefix(!) follow
 > Skips current song  
 
 `SEARCH`  
-> Takes an argument and searches top 5 results for it(eg. !search rap)  
+> Gets 5 results for an argument(eg. !search rap)  
 
 `QUEUE`  
 > Shows songs in queue  
