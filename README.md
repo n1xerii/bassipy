@@ -24,9 +24,11 @@ Shows songs in queue
 ---
 
 ## HOW TO GET BOT TOKEN
-1. Log into [DISCORD DEVELOPER PORTAL](https://discord.com/developers/applications)
-2. Make a new application.
-3. Copy its token under bot settings.
+1. Log into [DISCORD DEVELOPER PORTAL](https://discord.com/developers/applications)  
+2. Make a new application/bot.  
+3. Under the bot tab you will find the token.  
+> [!WARNING]
+> Never share your bot token!  
 
 ## HOW TO USE
 ### Prepare environment
