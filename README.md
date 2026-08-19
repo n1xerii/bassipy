@@ -45,8 +45,10 @@ Shows songs in queue
 
 ### Bot data
 1. Add a new file "bot_data.py"
-2. Open the file and add your Discord bot token `my_token = "yourtokenhere"` (DISCLAIMER: NEVER SHARE YOUR TOKEN!)
+2. Open the file and add your Discord bot token `my_token = "yourtokenhere"`
 3. Save the file and exit
+> [!WARNING]
+> Never share your bot token!
 
 ### Install deno
 1. Install node.js for Windows (https://nodejs.org/en/download). For Linux use your package manager
