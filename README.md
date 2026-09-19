@@ -24,7 +24,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 ---
 
 ## HOW TO GET BOT TOKEN
-1. Log into [DISCORD DEVELOPER PORTAL](https://discord.com/developers/applications)  
+1. Log into [Discord Developer Portal](https://discord.com/developers/applications)  
 2. Make a new application/bot.  
 3. Under the bot tab you will find your token.  
 > [!WARNING]
