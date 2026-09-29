@@ -23,7 +23,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 
 ---
 
-## HOW TO GET BOT TOKEN
+## BOT TOKEN
 1. Log into [Discord Developer Portal](https://discord.com/developers/applications)  
 2. Make a new application/bot.  
 3. Under the bot tab you will find your token.  
@@ -43,7 +43,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 5. Install the requirements
  `pip install -r requirements.txt`
 
-### Bot data
+### Bot settings
 1. Add a new file "bot_data.py"
 2. Open the file and add your Discord bot token `my_token = "yourtokenhere"`
 3. Save the file and exit
