@@ -25,7 +25,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 
 ## BOT TOKEN
 1. Log into [Discord Developer Portal](https://discord.com/developers/applications)  
-2. Make a new application/bot.  
+2. Create a new application/bot.  
 3. Under the bot tab you will find your token.  
 > [!WARNING]
 > Never share your bot token!  
@@ -34,7 +34,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 ### Prepare environment
 1. Clone the repository
  `git clone https://github.com/n1xerii/bassipy.git`
-2. Go inside the cloned folder
+2. Navigate inside the cloned repository
  `cd bassipy`
 3. Create a new Python environment (I recommend using conda)
  `conda create -n bassipy python=3.11` or `python -m venv bassipy`
@@ -44,7 +44,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
  `pip install -r requirements.txt`
 
 ### Bot settings
-1. Add a new file "bot_data.py"
+1. Create a new file "bot_data.py"
 2. Open the file and add your Discord bot token `my_token = "yourtokenhere"`
 3. Save the file and exit
 > [!WARNING]
