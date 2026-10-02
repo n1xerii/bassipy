@@ -4,7 +4,7 @@
 
 ## INFO
 Bassipy is a self-hosted, easy to use Discord bot for playing music in voice channels.
-It is written in Python and uses `discord.py` and `yt-dlp`.  
+It is written in Python and uses `discord.py`, `yt-dlp` and `ffmpeg`.  
 
 ## COMMANDS
 Bassipy features some commands which are used by typing the prefix(!) following with the command(eg. !play).  
@@ -23,14 +23,14 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 
 ---
 
-## BOT TOKEN
+## - BOT TOKEN
 1. Log into [Discord Developer Portal](https://discord.com/developers/applications)  
 2. Create a new application/bot.  
 3. Under the bot tab you will find your token.  
 > [!WARNING]
 > Never share your bot token!  
 
-## HOW TO USE
+## - HOW TO USE
 ### Prepare environment
 1. Clone the repository
  `git clone https://github.com/n1xerii/bassipy.git`
