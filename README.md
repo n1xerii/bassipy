@@ -34,7 +34,7 @@ Bassipy features some commands which are used by typing the prefix(!) following 
 ### Prepare environment
 1. Clone the repository
  `git clone https://github.com/n1xerii/bassipy.git`
-2. Navigate inside the cloned repository
+2. Navigate inside the cloned repo
  `cd bassipy`
 3. Create a new Python environment (I recommend using conda)
  `conda create -n bassipy python=3.11` or `python -m venv bassipy`
